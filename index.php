@@ -1,12 +1,21 @@
 <?php
   require __DIR__ . '/vendor/autoload.php';
 
-  use \App\Controller\Pages\Home;
-  use \App\Http\Request;
+  use \App\Http\Router;
   use \App\Http\Response;
+  use \App\Controller\Pages\Home;
 
-  $objResponse = new Response(200, 'Olá mundo!');
-  $objResponse->sendResponse();
+  define('URL', 'http://localhost/fatec-dsm-pi-es2');
 
-  echo Home::getHome();
+  $objRouter = new Router(URL);
+
+  // rota home
+  $objRouter->get('/', [
+    function(){
+      return new Response(200, Home::getHome());
+    }
+  ]);
+
+  // Imprimir response das rotas
+  $objRouter->run()->sendResponse();
 ?>

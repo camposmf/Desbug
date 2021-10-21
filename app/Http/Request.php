@@ -45,7 +45,5 @@
     public function getHeaders(){
       return $this->headers;
     }
-
-    
   }
 ?>
