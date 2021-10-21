@@ -110,7 +110,7 @@
         if(preg_match($patternRoute, $uri, $matches)){
 
           //verifica o método
-          if($methods[$httpMethod]){
+          if(isset($methods[$httpMethod])){
 
             // remove a primeira posição
             unset($matches[0]);
