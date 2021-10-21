@@ -3,6 +3,7 @@
 
   use \Closure;
   use \Exception;
+  use \ReflectionFunction;
 
   class Router{
     // url completa do projeto (raiz)
@@ -45,9 +46,19 @@
         }
       }
 
+      // variáveis das rotas
+      $params['variables'] = [];
+
+      // padrão de validação das variáveis das rotas
+      $patternVariable = '/{(.*?)}/';
+      if(preg_match_all($patternVariable, $route, $matches)){
+        $route = preg_replace($patternVariable, '(.*?)', $route);
+        $params['variables'] = $matches[1];
+      }
+
       // expressão regular responsável por criar um padrão de url
       $patternRoute = '/^'.str_replace('/', '\/', $route).'$/';
-
+      
       // adiciona a rota dentro da classe
       $this->routes[$patternRoute][$method] = $params;
     }
@@ -96,10 +107,18 @@
       foreach ($this->routes as $patternRoute => $methods) {
 
         // verifica se a uri bate com o padrão
-        if(preg_match($patternRoute, $uri)){
+        if(preg_match($patternRoute, $uri, $matches)){
 
           //verifica o método
           if($methods[$httpMethod]){
+
+            // remove a primeira posição
+            unset($matches[0]);
+
+            // variáveis processadas
+            $keys = $methods[$httpMethod]['variables'];
+            $methods[$httpMethod]['variables'] = array_combine($keys, $matches);
+            $methods[$httpMethod]['variables']['request'] = $this->request;
 
             // retorno dos parâmetros da rota
             return $methods[$httpMethod];
@@ -127,6 +146,13 @@
 
         // argumentos da função
         $args = [];
+
+        // reflection function
+        $reflection = new ReflectionFunction($route['controller']);
+        foreach($reflection->getParameters() as $params){
+          $name = $params->getName();
+          $args[$name] = $route['variables'][$name] ?? '';
+        }
 
         // retorna execução da função
         return call_user_func_array($route['controller'], $args);
