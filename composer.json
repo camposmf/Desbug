@@ -1,0 +1,8 @@
+{
+  "name": "fatec-dsm-pi-es2/fatec_dsm_pi_es2",
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  }
+}
