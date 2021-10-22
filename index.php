@@ -1,12 +1,11 @@
 <?php
-  //require __DIR__ . '/vendor/autoload.php';
   require __DIR__ . './bootstrap/app.php';
 
   use \App\Http\Router;
   use \App\Utils\View;
   
   // definir constante
-  define('URL', 'http://localhost/fatec-dsm-pi-es2');
+  define('URL', getenv('URL'));
 
   // define valor padrão das variáveis
   View::init([
