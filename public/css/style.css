@@ -12,6 +12,10 @@ body{
     background-color: #284B63;
 }
 
+.bg-darkerblue{
+    background-color: #061925;
+}
+
 .bg-pattern{
     background:url(../media/Background_pattern.png);
 }
@@ -52,6 +56,10 @@ a:hover{
     background-color: #284B63 !important;
 }
 
+.profile-img:hover{
+   /**background: url(../media/icons/Editicon.png);**/
+}
+
 .description{
     width: 50%;   
     font-size: 0.90rem;
@@ -62,23 +70,99 @@ a:hover{
     margin-bottom: 2rem;
 }
 
-/*Informações do usuário*/
 
+
+/*Informações do usuário*/
 .user-card{
-    height: 100vh;
-    width: 50%;
+    width: 25%;
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
 }
 
-.user-pfp-img{
+.user-pfp-img{  
+    margin-top: 5%;
     width: 85%;
-
 }
 
 .user-info{
-    width: 50%;
+    width: 80%;
+}
+
+.card-img-top{
+    width: 90%;
+}
+
+.tinytext{
+    font-size: 0.8rem;
+}
+
+/*Página de desafios*/
+
+.desafios-global{
+    width: 122vh;
+}
+
+.ct-categorias{
+    width: 119vh;
+}
+
+.banner{
+    width: 100%;
+}
+
+.banner-img img{
+    width: 15%;
+    position: absolute;
+    top: 4%;
+    left: 78%;
+ 
+}
+
+.card-categoria img{
+    width: 100%;
+}
+
+.card-categoria {
+    width: 30%;
+}
+
+.card-recomendada{
+    width: 100%;
+    height: 13.5vh;
+    margin-top:1.5rem;
+}
+
+#recomendada-1{
+    background:url(../media/jpg/3400_7_06.jpg) repeat-y center;
+    background-size: cover;
+    opacity: 0.2;
 }
 
 
-.card-img-top{
-    width: 20%;
+#recomendada-1 h5{
+
+    opacity: 1;
+}
+
+
+#recomendada-2{
+    background:url(../media/jpg/21004059.jpg) repeat-y center;
+    background-size: cover;
+    opacity: 0.2;
+
+}
+
+#recomendada-3{
+    background:url(../media/jpg/3600_6_05.jpg) repeat-y center;
+    background-size: cover;
+    opacity: 0.2;
+
+}
+
+.recomendada-title{
+    color:rgb(241, 241, 241);
+    font-weight: bolder;
 }
