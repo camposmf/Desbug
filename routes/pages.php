@@ -3,24 +3,31 @@
   use \App\Http\Response;
   use \App\Controller\Pages;
 
-  // home
+  // rota login
   $objRouter->get('/', [
     function(){
-      return new Response(200, Pages\Home::getHome());
+      return new Response(200, Pages\Login::getLogin());
     }
   ]);
 
-  // sobre
-  $objRouter->get('/sobre', [
+  // rota usuario (GET)
+  $objRouter->get('/usuario', [
     function(){
-      return new Response(200, Pages\About::getAbout());
+      return new Response(200, Pages\User::getUser());
     }
   ]);
 
-  // dinâmica
-  $objRouter->get('/sobre/{idPagina}/{acao}', [
-    function($idPagina, $acao){
-      return new Response(200, 'Página '.$idPagina.' - '.$acao);
+  // rota perfil
+  $objRouter->get('/perfil', [
+    function(){
+      return new Response(200, Pages\Profile::getProfile());
+    }
+  ]);
+
+  // rota perfil
+  $objRouter->get('/home', [
+    function(){
+      return new Response(200, Pages\Home::getHome());
     }
   ]);
 ?>
