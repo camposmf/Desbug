@@ -1,8 +1,35 @@
-<h1>Página Home</h1>
-<br>
-Usuario:            {{username}}  <br><hr>
-Nome Jogo:          {{nickname}}  <br><hr>
-E-mail:             {{email}}     <br><hr>
-Senha:              {{password}}  <br><hr>
-Data de Nascimento: {{birthDate}} <br><hr>
-Imagem:             {{image}}     <br><br>
+{{header}}
+
+<section class="bg-darkblue py-3 px-3">
+
+    <div class="container user-card text-center ">
+        <div class="user-info p-2">
+            <img class="user-pfp-img rounded" src="public/media/profilepic.png">
+            <h4 class="py-2 text-center">username</h4>
+
+            <div class="xp-group py-2 d-flex justify-content-between">
+                <h5>XP</h5>
+                <h5>75%</h5>
+
+            </div>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0"
+                    aria-valuemax="100">
+                </div>
+            </div>
+
+            <div class="container py-4">
+            <div class="card bg-darkblue">
+                <img class="card-img-top" src="public/media/medalhas/medal1.png" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">
+                      XP 100
+                  </p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+
+{{footer}}

@@ -1,0 +1,84 @@
+/*Fundo e cores*/
+body{
+    font-family: 'Roboto', sans-serif;
+}
+
+
+.bg-darkblue{
+    background-color: #0C2637;
+}
+
+.bg-blue{
+    background-color: #284B63;
+}
+
+.bg-pattern{
+    background:url(../media/Background_pattern.png);
+}
+
+.form-label{
+    width: 50%;
+    padding: auto;
+    margin: auto;
+}
+
+.img{
+    width: 15%;
+    height: 15%;
+    margin-left: 2rem;
+}
+
+/*Links*/
+a:link{
+    text-decoration:none;
+    color: rgb(255, 255, 255);
+}
+
+a:hover{
+    color:#5a86a3;
+}
+
+/*Perfis*/
+.profile-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-img{
+    width: 60%;
+    cursor: pointer !important;
+    background-color: #284B63 !important;
+}
+
+.description{
+    width: 50%;   
+    font-size: 0.90rem;
+}
+
+.tt-perfil{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+/*Informações do usuário*/
+
+.user-card{
+    height: 100vh;
+    width: 50%;
+}
+
+.user-pfp-img{
+    width: 85%;
+
+}
+
+.user-info{
+    width: 50%;
+}
+
+
+.card-img-top{
+    width: 20%;
+}
