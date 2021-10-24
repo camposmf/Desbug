@@ -13,6 +13,18 @@
     // nome da tabela a ser manipulada
     private $table; 
 
+    // nome do host do banco de dados
+    private static $dbHost;
+
+    // nome do banco de dados
+    private static $dbName;
+
+    // nome do usuário do banco de dados
+    private static $dbUser;
+
+    // senha do banco de dados
+    private static $dbPass;
+
     // instância de conexão com o banco de dados
     private $connection;
 
@@ -21,10 +33,18 @@
       $this->setConnection();
     }
 
+    // método responsável por definir as configurações do banco de dados
+    public static function config($dbHost, $dbName, $dbUser, $dbPass){
+      self::$dbHost = $dbHost;
+      self::$dbName = $dbName;
+      self::$dbUser = $dbUser;
+      self::$dbPass = $dbPass;
+    }
+
     // método responsável de criar uma conexão com o banco de dados
     private function setConnection() {
       try {
-        $this->connection = new PDO('mysql:host='.HOST.';dbname='.NAME,USER,PASSWORD);
+        $this->connection = new PDO('mysql:host='.self::$dbHost.';dbname='.self::$dbName,self::$dbUser,self::$dbPass);
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       } catch (PDOException $e) {
         die('ERROR: '.$e->getMessage());
