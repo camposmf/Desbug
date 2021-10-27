@@ -1,7 +1,6 @@
 <?php
   namespace App\Model\Entity;
 
-  use \PDO;
   use App\Db\Database;
   use App\Model\Entity\User;
 
@@ -17,7 +16,7 @@
       $this->User = new User();
     }
   
-    // método responsável por inserir depoimentos no banco
+    // método responsável por inserir registros no banco de dados
     public function insert(){
       // definir valores
       $this->departureDate = null;
@@ -36,7 +35,7 @@
       return true;
     }
 
-    // método responsável por atualizar depoimentos no banco  
+    // método responsável por atualizar registros no banco de dados
     public function update(){
       $objDatabase = new Database('tb_tempo_ativo');
       $objDatabase->update('id = '.$this->id, [

@@ -1,18 +1,53 @@
 <?php
-
   namespace App\Model\Entity;
 
-  Class User extends ActiveTime {
-    public $id          = 1; 
-    public $nickname    = 'Jamile_Batata';
-    public $username    = 'Jamile';
-    public $email       = 'jamile_gosta_batata@gmail.com';
-    public $password    = 'jamile_batata123';
-    public $birthDate    = '18/02/1999';
-    public $image    = 'resources/images/jamile_batata.png';
+  use \PDO;
+  use App\Db\Database;
 
-    /* TODO: Entender como fazer o relacionamento entre as tabelas do banco como Classes no php */
-    //public $ActiveTime;
+  Class User {
+    public $id; 
+    public $nickname;
+    public $username;
+    public $email;
+    public $password;
+    public $birthDate;
+    public $image;
 
+    // método responsável por inserir usuários no banco
+    public function insert(){
+
+      // insere usuário no banco de dados
+      $this->id = (new Database('tb_usuario'))->insert([
+        'nm_nickname'     => $this->nickname,
+        'nm_usuario'      => $this->username,
+        'ds_email'        => $this->email,
+        'ds_senha'        => $this->password,
+        'dt_nascimento'   => $this->birthDate,
+        'img_usuario'     => $this->image
+      ]);
+
+      // retornar sucesso
+      return true;
+    }
+
+    // método responsável por atualizar registros no banco de dados
+    public function update(){
+      $objDatabase = new Database('tb_usuario');
+      $objDatabase->update('id = '.$this->id, [
+        'nm_nickname'     => $this->nickname,
+        'nm_usuario'      => $this->username,
+        'ds_email'        => $this->email,
+        'ds_senha'        => $this->password,
+        'dt_nascimento'   => $this->birthDate,
+        'img_usuario'     => $this->image
+      ]);
+    }
+
+    // método responsável por obter os depoimentos do banco 
+    public static function get($where = null, $order = null, $limit = null){
+      $objDatabase = new Database('tb_usuario');
+      return $objDatabase->select($where, $order, $limit)
+                         ->fetchAll(PDO::FETCH_CLASS, self::class);
+    }
   }
 ?>
