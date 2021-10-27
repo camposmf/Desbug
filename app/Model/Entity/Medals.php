@@ -6,26 +6,17 @@
 
   Class Medals {
     public $id;
-    public $User;
     public $image;
     public $description;
     public $totalValue;
-    public $currentValue;
-
-    // método responsável por instânciar a classe
-    public function __construct(){
-      $this->User = new User();
-    }
 
     // método responsável por inserir registros no banco de dados
     public function insert(){
 
       // insere medalha no banco de dados
       $this->id = (new Database('tb_medalha'))->insert([
-        'id_medalha'        => $this->User->id,
         'ds_medalha'        => $this->description,
         'vl_medalha_total'  => $this->totalValue,
-        'vl_medalha_atual'  => $this->currentValue,
         'img_medalha'       => $this->image
       ]);
 
