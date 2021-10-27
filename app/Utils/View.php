@@ -34,6 +34,5 @@
       $file = __DIR__ . '/../../public/view/'.$viewName.'.html';
       return file_exists($file) ? file_get_contents($file) : '';
     }
-
   }
 ?>

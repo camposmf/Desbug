@@ -23,8 +23,5 @@
     private static function getFooter(){
       return View::render('pages/footer');
     }
-
-    
-
   }
 ?>

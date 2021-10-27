@@ -4,7 +4,7 @@
   use \App\Utils\View;
   use \App\Common\Environment;
   use \App\Db\Database;
-  
+
   // carrega as variáveis de ambiente do projeto
   Environment::load(__DIR__.'/../');
 
