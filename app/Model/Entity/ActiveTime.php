@@ -7,7 +7,6 @@
   Class ActiveTime {
     public $id;
     public $User;
-    public $activeDay;
     public $entryDate;
     public $departureDate;
 
@@ -26,7 +25,6 @@
       // insere tempo de atividade no banco de dados
       $this->id = (new Database('tb_tempo_ativo'))->insert([
         'id_usuario'    => $this->User->id,
-        'nr_dia_ativo'  => $this->activeDay,
         'dt_entrada'    => $this->entryDate,
         'dt_saida'      => $this->departureDate
       ]);
@@ -38,12 +36,18 @@
     // método responsável por atualizar registros no banco de dados
     public function update(){
       $objDatabase = new Database('tb_tempo_ativo');
-      $objDatabase->update('id = '.$this->id, [
+      $objDatabase->update('id_tempo = '.$this->id, [
         'id_usuario'    => $this->User->id,
-        'nr_dia_ativo'  => $this->activeDay,
         'dt_entrada'    => $this->entryDate,
         'dt_saida'      => $this->departureDate
       ]);
+    }
+
+    // método responsável por obter os usuários do banco 
+    public static function get($fields){
+      $objDatabase = new Database('tb_tempo_ativo');
+      return $objDatabase->select()
+                         ->fetchAll(PDO::FETCH_CLASS, self::class);
     }
   }  
 ?>

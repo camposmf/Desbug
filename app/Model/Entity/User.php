@@ -33,7 +33,7 @@
     // método responsável por atualizar registros no banco de dados
     public function update(){
       $objDatabase = new Database('tb_usuario');
-      $objDatabase->update('id = '.$this->id, [
+      $objDatabase->update('id_usuario = '.$this->id, [
         'nm_nickname'     => $this->nickname,
         'nm_usuario'      => $this->username,
         'ds_email'        => $this->email,
@@ -43,11 +43,25 @@
       ]);
     }
 
-    // método responsável por obter os depoimentos do banco 
+    // método responsável por obter os usuários do banco 
     public static function get($where = null, $order = null, $limit = null){
       $objDatabase = new Database('tb_usuario');
       return $objDatabase->select($where, $order, $limit)
                          ->fetchAll(PDO::FETCH_CLASS, self::class);
+    }
+
+    // método responsável por obter os usuários filtrados por email
+    public static function getById($email, $order = null, $limit = null){
+      $objDatabase = new Database('tb_usuario');
+      return $objDatabase->select('ds_email = '.$email, $order, $limit)
+                         ->fetchObject(self::class);
+    }
+
+    // método responsável por obter os usuários filtrados por acesso
+    public static function getById($email, $password, $order = null, $limit = null){
+      $objDatabase = new Database('tb_usuario');
+      return $objDatabase->select('ds_email = '.$email.' ds_senha = '.$password, $order, $limit)
+                         ->fetchObject(self::class);
     }
   }
 ?>
