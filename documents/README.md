@@ -3,4 +3,4 @@
 <h2>Project Name</h2>
 Projeto Integrador 2º semestre Desenvolvimento de Software | Fatec Araras
 
-<h4>Back and Front-end part</h4>
+<h4>Software Engineer's documents part</h4>
