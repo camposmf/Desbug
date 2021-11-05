@@ -10,10 +10,17 @@
     }
   ]);
 
-  // rota usuario (GET)
+  // rota usuario (Read)
   $objRouter->get('/usuario', [
     function(){
       return new Response(200, Pages\User::getUser());
+    }
+  ]);
+
+  // rota usuario (Create)
+  $objRouter->post('/usuario', [
+    function($request){
+      return new Response(200, Pages\User::insertUser($request));;
     }
   ]);
 
