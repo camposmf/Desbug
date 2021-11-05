@@ -37,4 +37,11 @@
       return new Response(200, Pages\Home::getHome());
     }
   ]);
+
+  // rota atividade
+  $objRouter->get('/atividade', [
+    function(){
+      return new Response(200, Pages\Activity::getActivity());
+    }
+  ]);
 ?>
