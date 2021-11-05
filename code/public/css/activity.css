@@ -1,0 +1,54 @@
+/*Atividade escolhida*/
+.img-atividade img{
+  width: 12rem;
+  height: 12rem;
+}
+  
+.atv-texto{
+  margin-left: 2rem;
+}
+
+.atv-texto p{
+  font-size:1.25rem;
+}
+
+.resposta{
+  outline: 0;
+  border: 0 none;
+  height: 200px;
+  resize: none !important;
+  background-color: #284B63;
+}
+
+.resposta:focus {
+  color: white;
+  background-color: #284B63;
+}
+
+.resposta-atividade{
+  width:125vh;
+  background-color: blue;
+}
+
+.clock-text p{
+  color: white;
+  font-size: 2rem;
+  text-align: right;
+  font-weight: bold;
+}
+
+.clock{
+  height:150px;
+  border-radius: 15px;
+}
+
+.clock-img img{
+  width:100px;
+  height:100px;
+  margin-right: 2rem;
+}
+
+.container-buttons button{
+  margin:2rem;
+  width: 250px;
+}
