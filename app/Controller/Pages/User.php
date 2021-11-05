@@ -12,6 +12,6 @@
 
       // retornar a view da página
       return parent::getPage('Projeto Interdisciplinar | Desbug', $content);
-    }    
+    }
   }
 ?>

@@ -17,6 +17,12 @@
     }
   ]);
 
+  $objRouter->post('/usuario', [
+    function($request){
+      return new Response(200, Pages\User::getUser());
+    }
+  ]);
+
   // rota perfil
   $objRouter->get('/perfil', [
     function(){
@@ -24,10 +30,18 @@
     }
   ]);
 
-  // rota perfil
+  // rota home
   $objRouter->get('/home', [
     function(){
       return new Response(200, Pages\Home::getHome());
     }
   ]);
+
+ // rota atividade
+ $objRouter->get('/atividade', [
+  function(){
+    return new Response(200, Pages\Activity::getActivity());
+  }
+ ]);
+
 ?>
