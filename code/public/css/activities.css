@@ -1,0 +1,17 @@
+/*Atividade escolhida*/
+.img-atividade img{
+    width: 12rem;
+    height: 12rem;
+  }
+  
+  .atv-texto{
+    margin-left: 2rem;
+  }
+  
+  .resposta{
+    height: 200px;
+  }
+
+  .teste{
+    color:tomato;
+  }

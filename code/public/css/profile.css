@@ -1,0 +1,27 @@
+/*Perfis*/
+.profile-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-img{
+    width: 60%;
+    cursor: pointer !important;
+    background-color: #284B63 !important;
+}
+
+.profile-img:hover{
+   /**background: url(../media/icons/Editicon.png);**/
+}
+
+.description{
+    width: 50%;   
+    font-size: 0.90rem;
+}
+
+.tt-perfil{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}

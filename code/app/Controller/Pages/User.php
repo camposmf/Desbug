@@ -2,7 +2,7 @@
   namespace App\Controller\Pages;
 
   use \App\Utils\View;
-  use \App\Controller\Profile;
+  use \App\Controller\Pages\Profile;
   use \App\Model\Entity\User as EntityUser;
 
   class User extends Page{
