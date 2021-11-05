@@ -16,6 +16,9 @@
     // método responsável por inserir usuários no banco
     public function insert(){
 
+      echo "<pre>";
+        print_r($this);
+      echo "</pre>"; exit;
       // insere usuário no banco de dados
       $this->id = (new Database('tb_usuario'))->insert([
         'nm_nickname'     => $this->nickname,
@@ -51,14 +54,14 @@
     }
 
     // método responsável por obter os usuários filtrados por email
-    public static function getById($email, $order = null, $limit = null){
+    public static function getByEmail($email, $order = null, $limit = null){
       $objDatabase = new Database('tb_usuario');
       return $objDatabase->select('ds_email = '.$email, $order, $limit)
                          ->fetchObject(self::class);
     }
 
     // método responsável por obter os usuários filtrados por acesso
-    public static function getById($email, $password, $order = null, $limit = null){
+    public static function getByLogin($email, $password, $order = null, $limit = null){
       $objDatabase = new Database('tb_usuario');
       return $objDatabase->select('ds_email = '.$email.' ds_senha = '.$password, $order, $limit)
                          ->fetchObject(self::class);

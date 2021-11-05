@@ -20,7 +20,7 @@
 
     // método responsável por iniciar a classe e definir valores
     public function __construct($url){
-      $this->request = new Request();
+      $this->request = new Request($this);
       $this->url = $url;
       $this->setPrefix();
     }
@@ -109,7 +109,7 @@
         // verifica se a uri bate com o padrão
         if(preg_match($patternRoute, $uri, $matches)){
 
-          //verifica o método
+          // verifica o método
           if(isset($methods[$httpMethod])){
 
             // remove a primeira posição
@@ -160,6 +160,11 @@
       } catch (Exception $e) {
         return new Response($e->getCode(), $e->getMessage());
       }
+    }
+
+    // método responsável por retornar a URL atual
+    public function getCurrentUrl(){
+      return $this->url.$this->getUri();
     }
   }
 ?>
