@@ -58,4 +58,26 @@
       return new Response(200, Pages\Activity::getActivity($request));
     }
   ]);
+
+  // rota feedback
+  $objRouter->get('/feedback', [
+      function($request){
+        return new Response(200, Pages\Feedback::getFeedback($request));
+      }
+  ]);
+
+// rota desabafo
+   $objRouter->get('/desabafo', [
+    function($request){
+      return new Response(200, Pages\Desabafo::getDesabafo($request));
+    }
+]);
+
+// rota centrais de ajuda
+$objRouter->get('/centrais', [
+  function($request){
+    return new Response(200, Pages\Centrais::getCentrais($request));
+  }
+]);
+
 ?>
