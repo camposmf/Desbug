@@ -3,17 +3,24 @@
   use \App\Http\Response;
   use \App\Controller\Pages;
 
-  // rota login
-  $objRouter->get('/', [
-    function(){
-      return new Response(200, Pages\Login::getLogin());
+  // rota login (Read)
+  $objRouter->get('/login', [
+    function($request){
+      return new Response(200, Pages\Login::getLogin($request));
+    }
+  ]);
+
+  // rota login (Create)
+  $objRouter->post('/login', [
+    function($request){
+      return new Response(200, Pages\Login::setLogin($request));
     }
   ]);
 
   // rota usuario (Read)
   $objRouter->get('/usuario', [
-    function(){
-      return new Response(200, Pages\User::getUser());
+    function($request){
+      return new Response(200, Pages\User::getUser($request));
     }
   ]);
 
@@ -26,22 +33,29 @@
 
   // rota perfil
   $objRouter->get('/perfil', [
-    function(){
-      return new Response(200, Pages\Profile::getProfile());
+    function($request){
+      return new Response(200, Pages\Profile::getProfile($request));
+    }
+  ]);
+
+  // rota perfil
+  $objRouter->post('/perfil', [
+    function($request){
+      return new Response(200, Pages\Profile::getProfile($request));
     }
   ]);
 
   // rota perfil
   $objRouter->get('/home', [
-    function(){
-      return new Response(200, Pages\Home::getHome());
+    function($request){
+      return new Response(200, Pages\Home::getHome($request));
     }
   ]);
 
   // rota atividade
   $objRouter->get('/atividade', [
-    function(){
-      return new Response(200, Pages\Activity::getActivity());
+    function($request){
+      return new Response(200, Pages\Activity::getActivity($request));
     }
   ]);
 ?>
