@@ -10,5 +10,5 @@
   include __DIR__.'/routes/pages.php';
   
   // Imprimir response das rotas
-  $objRouter->run()->sendResponse();
+  $objRouter->runBarryRun()->sendResponse();
 ?>
