@@ -43,29 +43,30 @@
       // definir uri com o valor da rota
       $this->uri = $explodeUri[0];
     }
+    
+    public function getHttpMethod() {
+      return $this->httpMethod;
+    }
+    
+    public function getUri() {
+      return $this->uri;
+    }
+    
+    public function getHeaders(){
+      return $this->headers;
+    }
+    
+    public function getQueryParams(){
+      return $this->queryParams;
+    }
+    
+    public function getPostVars(){
+      return $this->postVars;
+    }
 
     public function getRouter(){
       return $this->router;
     }
 
-    public function getHttpMethod() {
-      return $this->httpMethod;
-    }
-
-    public function getUri() {
-      return $this->uri;
-    }
-
-    public function getQueryParams(){
-      return $this->queryParams;
-    }
-
-    public function getPostVars(){
-      return $this->postVars;
-    }
-
-    public function getHeaders(){
-      return $this->headers;
-    }
   }
 ?>
