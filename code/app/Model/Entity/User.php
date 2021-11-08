@@ -5,13 +5,13 @@
   use App\Db\Database;
 
   Class User {
-    public $id; 
-    public $nickname;
-    public $username;
-    public $email;
-    public $password;
-    public $birthDate;
-    public $image;
+    public $id_usuario; 
+    public $nm_nickname;
+    public $nm_usuario;
+    public $ds_email;
+    public $ds_senha;
+    public $dt_nascimento;
+    public $img_usuario;
 
     // método responsável por inserir usuários no banco
     public function insert(){
@@ -54,17 +54,8 @@
     }
 
     // método responsável por obter os usuários filtrados por email
-    public static function getByEmail($email, $order = null, $limit = null){
-      $objDatabase = new Database('tb_usuario');
-      return $objDatabase->select('ds_email = '.$email, $order, $limit)
-                         ->fetchObject(self::class);
-    }
-
-    // método responsável por obter os usuários filtrados por acesso
-    public static function getByLogin($email, $password, $order = null, $limit = null){
-      $objDatabase = new Database('tb_usuario');
-      return $objDatabase->select('ds_email = '.$email.' ds_senha = '.$password, $order, $limit)
-                         ->fetchObject(self::class);
+    public static function getUserByEmail($email){
+      return (new Database('tb_usuario'))->select('ds_email = "'.$email.'"')->fetchObject(self::class);
     }
   }
 ?>
