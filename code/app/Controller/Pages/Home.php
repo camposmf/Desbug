@@ -5,7 +5,7 @@
   class Home extends Page{
 
     // método responsável por retornar o conteúdo (view) da Home
-    public static function getHome(){
+    public static function getHome($request){
 
       // view da home
       $content = View::render('pages/home', [
