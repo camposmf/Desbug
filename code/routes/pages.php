@@ -80,4 +80,12 @@ $objRouter->get('/centrais', [
   }
 ]);
 
+
+// rota editar perfil
+$objRouter->get('/editar', [
+  function($request){
+    return new Response(200, Pages\EditarPerfil::getEditarPerfil($request));
+  }
+]);
+
 ?>

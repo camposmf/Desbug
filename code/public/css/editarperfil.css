@@ -1,0 +1,21 @@
+.img-perfil{
+    width: 170px;
+    height: 150px;
+}
+
+
+.info-perfil{
+    width: 200px;
+}
+
+.medal-perfil  img{
+    width: 80px;
+    height: 80px;
+}
+
+.edit-icon{
+    width: 25px;
+    height: 25px;
+    margin-top: 0.6rem;
+    margin-right: 0.2rem;
+}
