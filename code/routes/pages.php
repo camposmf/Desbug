@@ -88,4 +88,12 @@ $objRouter->get('/editar', [
   }
 ]);
 
+// rota métricas
+$objRouter->get('/metricas', [
+  function($request){
+    return new Response(200, Pages\Metricas::getMetricas($request));
+  }
+]);
+
+
 ?>
