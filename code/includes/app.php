@@ -29,7 +29,9 @@
   MiddlewareQueue::setMap([
     'maintenance'      => \App\Http\Middleware\Maintenance::class,
     'require-logout'   => \App\Http\Middleware\RequireLogout::class,
-    'require-login'    => \App\Http\Middleware\RequireLogin::class
+    'require-login'    => \App\Http\Middleware\RequireLogin::class,
+    'api'              => \App\Http\Middleware\Api::class,
+    'user-basic-auth'  => \App\Http\Middleware\UserBasicAuth::class
   ]);
 
   // define o mapeamento dos middlewares padrões (Executados em todas as rotas)
