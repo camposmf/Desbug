@@ -5,7 +5,8 @@
     // rota de listagem de usuários
     $objRouter->get('/api/users', [
         'middlewares' => [
-            'api'
+            'api',
+            'user-basic-auth'
         ],
         function($request){
             return new Response(200, Api\User::getUsers($request), 'application/json');
@@ -15,7 +16,8 @@
     // rota de consultar usuário
     $objRouter->get('/api/users/{id}', [
         'middlewares' => [
-            'api'
+            'api',
+            'user-basic-auth'
         ],
         function($request, $id){
             return new Response(200, Api\User::getUser($request, $id), 'application/json');
