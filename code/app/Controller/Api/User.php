@@ -114,6 +114,12 @@
             // validar campos obrigatórios
             self::handleRequiredFields($postVars);
 
+            // valida a duplicação de e-mail 
+            $objUserEmail = EntityUser::getUserByEmail($postVars['ds_email']);
+            if($objUserEmail instanceof EntityUser){
+                throw new \Exception("O e-mail '".$postVars['ds_email']."' já está em uso.", 400);
+            }
+
             // carregar os dados na user model
             $objUser = new EntityUser();
             $objUser->nm_nickname    =  $postVars['nm_nickname'];
