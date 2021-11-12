@@ -2,6 +2,8 @@
     namespace App\Http\Middleware;
 
     class Maintenance {
+
+        // método responsável por executar o middleware
         public function handle($request, $next){
             // verifica estado de manutenção da página
             if(getenv('MAINTENANCE') == 'true'){
