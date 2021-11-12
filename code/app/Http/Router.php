@@ -20,11 +20,19 @@
     // instância de request
     private $request;
 
+    // content type padrão do response
+    private $contentType = 'text/html';
+
     // método responsável por iniciar a classe e definir valores
     public function __construct($url){
       $this->request = new Request($this);
       $this->url = $url;
       $this->setPrefix();
+    }
+
+    // método responsável por alterar o valor do content type
+    public function setContentType($contentType){
+      $this->contentType = $contentType;
     }
 
     // método responsável por definir o prefixo das rotas
@@ -98,7 +106,7 @@
       $explodedUri = strlen($this->prefix) ? explode($this->prefix, $uri) : [$uri];
 
       // retorna a uri sem prefixo
-      return end($explodedUri);
+      return rtrim(end($explodedUri), '/');
     }
 
     // método responsável por retornar os dados da rota atual
@@ -166,7 +174,22 @@
         return (new MiddlewareQueue($route['middlewares'], $route['controller'], $args))->next($this->request);
 
       } catch (Exception $e) {
-        return new Response($e->getCode(), $e->getMessage());
+        return new Response($e->getCode(), $this->getErrorMessage($e->getMessage()) , $this->contentType);
+      }
+    }
+
+    // método responsável por retornar a mensagem de error de acordo com o content type
+    private function getErrorMessage($message){
+      switch ($this->contentType) {
+        case 'application/json':
+          return [
+            "error" => $message
+          ];
+        break;
+
+        default:
+          return $message;
+        break;
       }
     }
 
