@@ -125,8 +125,8 @@
             $objUser->nm_nickname    =  $postVars['nm_nickname'];
             $objUser->nm_usuario     =  $postVars['nm_usuario'];
             $objUser->ds_email       =  $postVars['ds_email'];
-            $objUser->ds_senha       =  $postVars['ds_senha'];
             $objUser->dt_nascimento  =  $postVars['dt_nascimento'];
+            $objUser->ds_senha       =  password_hash($postVars['ds_senha'], PASSWORD_DEFAULT);
             $objUser->img_usuario    =  isset($postVars['img_usuario']) ? $postVars['img_usuario'] : null;
 
             // cadastrar dados no banco de dados
@@ -134,6 +134,7 @@
 
             // retornar usuário
             return [
+                'id_usuario'    =>  (int)$objUser->id_usuario,
                 'nm_nickname'   =>  $objUser->nm_nickname,
                 'nm_usuario'    =>  $objUser->nm_usuario,
                 'ds_email'      =>  $objUser->ds_email,
@@ -165,13 +166,19 @@
                 throw new \Exception("Usuário '".$id."' não encontrado", 404);
             }
 
+            // valida a duplicação de e-mail 
+            $objUserEmail = EntityUser::getUserByEmail($postVars['ds_email']);
+            if($objUserEmail instanceof EntityUser && $objUserEmail->id_usuario != $objUser->id_usuario){
+                throw new \Exception("O e-mail '".$postVars['ds_email']."' já está em uso.", 400);
+            }
+
             // carregar os dados na user model
             $objUser->nm_nickname    =  $postVars['nm_nickname']   ?? $postVars['nm_nickname'];
             $objUser->nm_usuario     =  $postVars['nm_usuario']    ?? $postVars['nm_usuario'];
             $objUser->ds_email       =  $postVars['ds_email']      ?? $postVars['ds_email'];
-            $objUser->ds_senha       =  $postVars['ds_senha']      ?? $postVars['ds_senha'];
             $objUser->dt_nascimento  =  $postVars['dt_nascimento'] ?? $postVars['dt_nascimento'];
             $objUser->img_usuario    =  isset($postVars['img_usuario']) ? $postVars['img_usuario'] : null;
+            $objUser->ds_senha       =  password_hash($postVars['ds_senha'], PASSWORD_DEFAULT) ?? $postVars['ds_senha'];
 
             // atualiza dados no banco de dados
             $objUser->updateUser();
