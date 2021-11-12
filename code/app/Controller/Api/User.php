@@ -19,7 +19,7 @@
             $paginaAtual = $queryParams['page'] ?? 1;
 
             // instância da paginação
-            $objPagination = new Pagination($quantidadeTotal, $paginaAtual, 3);
+            $objPagination = new Pagination($quantidadeTotal, $paginaAtual, 5);
 
             // resultados da página
             $results = EntityUser::getUser(null, 'id_usuario ASC', $objPagination->getLimit());
