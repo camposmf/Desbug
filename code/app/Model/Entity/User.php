@@ -14,48 +14,53 @@
     public $img_usuario;
 
     // método responsável por inserir usuários no banco
-    public function insert(){
+    public function insertNewUser(){
 
-      echo "<pre>";
-        print_r($this);
-      echo "</pre>"; exit;
       // insere usuário no banco de dados
-      $this->id = (new Database('tb_usuario'))->insert([
-        'nm_nickname'     => $this->nickname,
-        'nm_usuario'      => $this->username,
-        'ds_email'        => $this->email,
-        'ds_senha'        => $this->password,
-        'dt_nascimento'   => $this->birthDate,
-        'img_usuario'     => $this->image
+      $this->id_usuario = (new Database('tb_usuario'))->insert([
+        'nm_nickname'     => $this->nm_nickname,
+        'nm_usuario'      => $this->nm_usuario,
+        'ds_email'        => $this->ds_email,
+        'ds_senha'        => $this->ds_senha,
+        'dt_nascimento'   => $this->dt_nascimento,
+        'img_usuario'     => $this->img_usuario
       ]);
 
       // retornar sucesso
       return true;
+
     }
 
     // método responsável por atualizar registros no banco de dados
-    public function update(){
-      $objDatabase = new Database('tb_usuario');
-      $objDatabase->update('id_usuario = '.$this->id, [
-        'nm_nickname'     => $this->nickname,
-        'nm_usuario'      => $this->username,
-        'ds_email'        => $this->email,
-        'ds_senha'        => $this->password,
-        'dt_nascimento'   => $this->birthDate,
-        'img_usuario'     => $this->image
+    public function updateUser(){
+      return (new Database('tb_usuario'))->update('id_usuario = '.$this->id_usuario, [
+        'nm_nickname'     => $this->nm_nickname,
+        'nm_usuario'      => $this->nm_usuario,
+        'ds_email'        => $this->ds_email,
+        'ds_senha'        => $this->ds_senha,
+        'dt_nascimento'   => $this->dt_nascimento,
+        'img_usuario'     => $this->img_usuario
       ]);
     }
 
+    // método responsável por deletar um usuário no banco de dados
+    public function deleteUser(){
+      return (new Database('tb_usuario'))->delete('id_usuario = '.$this->id_usuario);
+    }
+
     // método responsável por obter os usuários do banco 
-    public static function get($where = null, $order = null, $limit = null){
-      $objDatabase = new Database('tb_usuario');
-      return $objDatabase->select($where, $order, $limit)
-                         ->fetchAll(PDO::FETCH_CLASS, self::class);
+    public static function getUser($where = null, $order = null, $limit = null, $fields = '*'){
+      return (new Database('tb_usuario'))->select($where, $order, $limit, $fields);
     }
 
     // método responsável por obter os usuários filtrados por email
     public static function getUserByEmail($email){
       return (new Database('tb_usuario'))->select('ds_email = "'.$email.'"')->fetchObject(self::class);
+    }
+
+    // método responsável por obter os usuários filtrados por email
+    public static function getUserById($id){
+      return (new Database('tb_usuario'))->select('id_usuario = "'.$id.'"')->fetchObject(self::class);
     }
   }
 ?>
