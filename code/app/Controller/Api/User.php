@@ -211,6 +211,11 @@
                 throw new \Exception("Usuário '".$id."' não encontrado", 404);
             }
 
+            // impede a exlusão de outros usuários
+            if($objUser->id_usuario != $request->user->id_usuario){
+                throw new \Exception("Não é possível excluir outros usuários", 400);
+            }
+
             // deleta dados no banco de dados
             $objUser->deleteUser();
 
