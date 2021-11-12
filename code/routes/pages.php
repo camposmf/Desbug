@@ -34,21 +34,21 @@
   // rota perfil
   $objRouter->get('/perfil', [
     function($request){
-      return new Response(200, Pages\Profile::getProfile($request));
+      return new Response(200, Pages\Profiles::getProfiles($request));
     }
   ]);
 
   // rota perfil
   $objRouter->post('/perfil', [
     function($request){
-      return new Response(200, Pages\Profile::getProfile($request));
+      return new Response(200, Pages\Profiles::getProfiles($request));
     }
   ]);
 
-  // rota perfil
+  // rota home
   $objRouter->get('/home', [
     function($request){
-      return new Response(200, Pages\Home::getHome($request));
+      return new Response(200, Pages\Index::getIndex($request));
     }
   ]);
 
@@ -69,14 +69,14 @@
 // rota desabafo
    $objRouter->get('/desabafo', [
     function($request){
-      return new Response(200, Pages\Desabafo::getDesabafo($request));
+      return new Response(200, Pages\Vent::getVent($request));
     }
 ]);
 
 // rota centrais de ajuda
 $objRouter->get('/centrais', [
   function($request){
-    return new Response(200, Pages\Centrais::getCentrais($request));
+    return new Response(200, Pages\Centrals::getCentrals($request));
   }
 ]);
 
@@ -84,14 +84,14 @@ $objRouter->get('/centrais', [
 // rota editar perfil
 $objRouter->get('/editar', [
   function($request){
-    return new Response(200, Pages\EditarPerfil::getEditarPerfil($request));
+    return new Response(200, Pages\EditProfile::getEditProfile($request));
   }
 ]);
 
 // rota métricas
 $objRouter->get('/metricas', [
   function($request){
-    return new Response(200, Pages\Metricas::getMetricas($request));
+    return new Response(200, Pages\Metrics::getMetrics($request));
   }
 ]);
 
