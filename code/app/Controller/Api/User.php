@@ -22,7 +22,7 @@
             $objPagination = new Pagination($quantidadeTotal, $paginaAtual, 3);
 
             // resultados da página
-            $results = EntityUser::getUser(null, 'id_usuario DESC', $objPagination->getLimit());
+            $results = EntityUser::getUser(null, 'id_usuario ASC', $objPagination->getLimit());
 
             // retornar valores
             while($objUser = $results->fetchObject(EntityUser::class)){
