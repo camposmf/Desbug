@@ -4,8 +4,10 @@
   use \Closure;
   use \Exception;
   use \ReflectionFunction;
+  use \App\Http\Middleware\Queue as MiddlewareQueue;
 
   class Router{
+
     // url completa do projeto (raiz)
     private $url = '';
 
@@ -15,14 +17,22 @@
     // indice de rotas
     private $routes = [];
 
-    // Uma instância de request
+    // instância de request
     private $request;
+
+    // content type padrão do response
+    private $contentType = 'text/html';
 
     // método responsável por iniciar a classe e definir valores
     public function __construct($url){
       $this->request = new Request($this);
       $this->url = $url;
       $this->setPrefix();
+    }
+
+    // método responsável por alterar o valor do content type
+    public function setContentType($contentType){
+      $this->contentType = $contentType;
     }
 
     // método responsável por definir o prefixo das rotas
@@ -37,7 +47,7 @@
     // método (genérico) responsável por adicionar uma rota na classe
     private function addRoute($method, $route, $params=[]){
 
-      // validação dos parâmetros para
+      // validação dos parâmetros
       foreach ($params as $key => $value) {
         if($value instanceof Closure){
           $params['controller'] = $value;
@@ -45,6 +55,9 @@
           continue;
         }
       }
+
+      // middlewares da rota
+      $params['middlewares'] = $params['middlewares'] ?? [];
 
       // variáveis das rotas
       $params['variables'] = [];
@@ -85,18 +98,20 @@
 
     // método responsável por retornar a uri desconsiderando o prefixo
     private function getUri(){
+
       // obtem uri do objeto request 
       $uri = $this->request->getUri();
 
       // fatia a uri com o prefixo
-      $explodeUri = strlen($this->prefix) ? explode($this->prefix, $uri) : [$uri];
+      $explodedUri = strlen($this->prefix) ? explode($this->prefix, $uri) : [$uri];
 
       // retorna a uri sem prefixo
-      return end($explodeUri);
+      return rtrim(end($explodedUri), '/');
     }
 
     // método responsável por retornar os dados da rota atual
     private function getRoute(){
+
       // obtem uri do projeto
       $uri = $this->getUri();
 
@@ -134,14 +149,15 @@
     }
 
     // método responsável por executar a rota atual
-    public function run(){
+    public function runBarryRun(){
       try {
+
         // obtem a rota atual
         $route = $this->getRoute();
 
         // verifica controlador
         if(!isset($route['controller'])){
-          throw new Exception('Url não pôde ser processada',500);
+          throw new Exception('Url não pôde ser processada', 500);
         }
 
         // argumentos da função
@@ -154,17 +170,43 @@
           $args[$name] = $route['variables'][$name] ?? '';
         }
 
-        // retorna execução da função
-        return call_user_func_array($route['controller'], $args);
+        // retorna a execução da fila de middlewares
+        return (new MiddlewareQueue($route['middlewares'], $route['controller'], $args))->next($this->request);
 
       } catch (Exception $e) {
-        return new Response($e->getCode(), $e->getMessage());
+        return new Response($e->getCode(), $this->getErrorMessage($e->getMessage()) , $this->contentType);
+      }
+    }
+
+    // método responsável por retornar a mensagem de error de acordo com o content type
+    private function getErrorMessage($message){
+      switch ($this->contentType) {
+        case 'application/json':
+          return [
+            "error" => $message
+          ];
+        break;
+
+        default:
+          return $message;
+        break;
       }
     }
 
     // método responsável por retornar a URL atual
     public function getCurrentUrl(){
       return $this->url.$this->getUri();
+    }
+
+    // método responsável por redirecionar a url
+    public function redirect($route){
+
+      // url
+      $url = $this->url.$route;
+
+      // executa o redirect
+      header('location: '.$url);
+      exit;
     }
   }
 ?>

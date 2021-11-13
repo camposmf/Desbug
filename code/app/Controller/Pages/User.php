@@ -11,7 +11,7 @@
     public static function getUser(){
 
       // view da home
-      $content = View::render('pages/create-user');
+      $content = View::render('pages/user');
 
       // retornar a view da página
       return parent::getPage('Projeto Interdisciplinar | Desbug', $content);

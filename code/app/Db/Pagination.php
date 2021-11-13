@@ -39,16 +39,17 @@
 
     // método responsável por retornar as opções de páginas disponíveis
     public function getPages(){
+
       // não retornar páginas disponíveis
       if($this->pages == 1) return [];
-
+      
       // páginas
       $paginas = [];
 
       for($i=1; $i<=$this->pages;$i++){
         $paginas[] = [
           'pagina' => $i,
-          'atual'   => $i == $this->currentPage
+          'atual'  => $i == $this->currentPage
         ];
       }
 

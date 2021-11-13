@@ -11,15 +11,5 @@
         'content' => $content,
       ]);
     }    
-
-    // método responsável por renderizar o topo da página
-    private static function getHeader(){
-      return View::render('pages/header');
-    }
-
-    // método responsável por renderizar o rodapé da página
-    private static function getFooter(){
-      return View::render('pages/footer');
-    }
   }
 ?>

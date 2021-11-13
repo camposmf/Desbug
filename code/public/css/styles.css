@@ -1,8 +1,8 @@
 /*Fundo e cores*/
 body{
+    height: 100vh;
     font-family: 'Roboto', sans-serif;
 }
-
 
 .bg-darkblue{
     background-color: #0C2637;
@@ -13,7 +13,7 @@ body{
 }
 
 .bg-darkerblue{
-    background-color: #061925;
+    background-color: #0C2637;
 }
 
 .bg-pattern{
@@ -27,9 +27,8 @@ body{
 }
 
 .img{
-    width: 15%;
-    height: 15%;
-    margin-left: 2rem;
+    width: 240px;
+    height: 220px;
 }
 
 /*Links*/
@@ -42,6 +41,9 @@ a:hover{
     color:#5a86a3;
 }
 
-
-
-
+.btn-cadastrar button {
+    color: #fff;
+    cursor: pointer;
+    border: none !important;
+    background-color: transparent;
+}

@@ -10,6 +10,7 @@
   define('PASSWORD', getenv('DB_PASSWORD'));
 
   class Database {
+
     // nome da tabela a ser manipulada
     private $table; 
 
@@ -84,10 +85,10 @@
       $fields = array_keys($values);
 
       // monta query
-      $query = 'UPDATE '.$this->table.' SET '.implode('=?', $fields).'=? WHERE '.$where;
+      $query = 'UPDATE '.$this->table.' SET '.implode('=?, ', $fields).'=? WHERE '.$where;
 
       // executar a query
-      $this->execute($query, array_values($fields));
+      $this->execute($query, array_values($values));
 
       // retorna sucesso
       return true;
@@ -107,16 +108,18 @@
 
     // método responsável por executar uma consulta no banco
     public function select($where = null, $order = null, $limit = null, $fields = '*'){
+
       // dados da query
-      $where = strlen($where) ? 'WHERE '.$where : '';
-      $limit = strlen($limit) ? 'LIMIT '.$limit : '';
-      $order = strlen($order) ? 'ORDER BY '.$order : '';
+      $limit = strlen($limit) ? 'LIMIT '    .$limit : '';
+      $where = strlen($where) ? 'WHERE '    .$where : '';
+      $order = strlen($order) ? 'ORDER BY ' .$order : '';
 
       // montar query
       $query = 'SELECT '.$fields.' FROM '. $this->table.' '.$where.' '.$order.' '.$limit;
 
       // executa a query
       return $this->execute($query);
+
     }
   }
 ?>

@@ -2,6 +2,7 @@
   namespace App\Http;
 
   class Response{
+
     // código status http
     private $httpCode = 200;
 
@@ -31,9 +32,20 @@
     public function addHeaders($key, $value){
       $this->headers[$key] = $value;
     }
+    
+    // método responsável por enviar os headers para o navegador
+    private function sendHeaders(){
+      // status
+      http_response_code($this->httpCode);
 
+      // enviar headers
+      foreach ($this->headers as $key=>$value) {
+        header($key.': '.$value);
+      }
+    }
     // método responsável por enviar a resposta para o usuário
     public function sendResponse(){
+      
       // envia os headers
       $this->sendHeaders();
 
@@ -42,17 +54,10 @@
         case 'text/html':
           echo $this->content;
         exit;
-      }
-    }
-
-    // método responsável por enviar os headers para página
-    private function sendHeaders(){
-      // status
-      http_response_code($this->httpCode);
-
-      // enviar headers
-      foreach ($this->headers as $key => $value) {
-        header($key.': '.$value);
+        
+        case 'application/json':
+          echo json_encode($this->content, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        exit;
       }
     }
   }
