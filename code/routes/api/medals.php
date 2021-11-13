@@ -13,5 +13,16 @@
         }
     ]);
 
+    // rota de listagem de usuário
+    $objRouter->get('/api/medals/{id}', [
+        'middlewares' => [
+            'api',
+            'user-basic-auth'
+        ],
+        function($request, $id){
+            return new Response(200, Api\Medal::getMedal($request, $id), 'application/json');
+        }
+    ]);
+
 
 ?>

@@ -14,5 +14,10 @@
     public static function getMedals($where = null, $order = null, $limit = null, $fields = '*'){
       return (new Database('tb_medalha'))->select($where, $order, $limit, $fields);
     }
+
+    // método responsável por buscar uma medalha atráves do id
+    public static function getMedalById($id){
+      return(new Database('tb_medalha'))->select('id_medalha = "'.$id.'"')->fetchObject(self::class);
+    }
   }
 ?>

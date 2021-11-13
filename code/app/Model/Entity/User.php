@@ -58,7 +58,7 @@
       return (new Database('tb_usuario'))->select('ds_email = "'.$email.'"')->fetchObject(self::class);
     }
 
-    // método responsável por obter os usuários filtrados por email
+    // método responsável por obter os usuários filtrados por id
     public static function getUserById($id){
       return (new Database('tb_usuario'))->select('id_usuario = "'.$id.'"')->fetchObject(self::class);
     }
