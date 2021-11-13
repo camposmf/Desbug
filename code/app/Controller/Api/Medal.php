@@ -31,7 +31,7 @@
                     'id_medalha'        =>  (int)$objMedal->id_medalha,
                     'ds_medalha'        =>  $objMedal->ds_medalha,
                     'img_medalha'       =>  $objMedal->img_medalha,
-                    'vl_medalha_total'  =>  $objMedal->vl_medalha_total
+                    'vl_medalha_total'  =>  (float)$objMedal->vl_medalha_total
                 ];
             }
 
@@ -67,7 +67,61 @@
                 'id_medalha'        => (int)$objMedal->id_medalha,
                 'ds_medalha'        => $objMedal->ds_medalha,
                 'img_medalha'       => $objMedal->img_medalha,
-                'vl_medalha_total'  => $objMedal->vl_medalha_total
+                'vl_medalha_total'  => (float)$objMedal->vl_medalha_total
+            ];
+        }
+
+        // método responsável por validar os métodos obrigatórios da entidade
+        private static function handleRequiredFields($postVars){
+
+            // validar descrição da medalha
+            if(!isset($postVars['ds_medalha'])){
+                throw new \Exception("Descrição da melhada é um campo obrigatório", 400);
+            }
+
+            // validar imagem da medalha
+            if(!isset($postVars['img_medalha'])){
+                throw new \Exception("Imagem da medalha é um campo obrigatório", 400);
+            }
+
+            // validar valor para medalha
+            if(!isset($postVars['vl_medalha_total'])){
+                throw new \Exception("Valor para medalha é um campo obrigatório", 400);
+            }
+
+            return $postVars;
+        }
+
+        // método responsável por criar uma nova medalha
+        public static function setAddMedal($request){
+
+            // buscar variáveis do post
+            $postVars = $request->getPostVars();
+
+            // validar campos obrigatórios
+            self::handleRequiredFields($postVars);
+
+            // validar se a medalha já existe
+            $objMedal = EntityMedal::getMedalByName($postVars['ds_medalha']);
+            if($objMedal instanceof EntityMedal){
+                throw new \Exception("A medalha '".$postVars['ds_medalha']."' já existe na base de dados", 400);
+            }
+            
+            // carregar os dados
+            $objMedal = new EntityMedal();
+            $objMedal->ds_medalha       =   $postVars['ds_medalha'];
+            $objMedal->img_medalha      =   $postVars['img_medalha'];
+            $objMedal->vl_medalha_total =   $postVars['vl_medalha_total'];
+
+            // chamar método de inserção no banco de dados
+            $objMedal->insertNewMedal();
+
+            // retornar os dados para api
+            return [
+                'id_usuario'        =>  (int)$objMedal->id_medalha,
+                'ds_usuario'        =>  $objMedal->ds_medalha,
+                'img_usuario'       =>  $objMedal->img_medalha,
+                'vl_medalha_total'  =>  (float)$objMedal->vl_medalha_total,
             ];
         }
 

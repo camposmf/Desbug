@@ -2,19 +2,19 @@
   namespace App\Controller\Pages;
   use \App\Utils\View;
 
-  class Home extends Page{
+  class Centrals extends Page { 
 
-    // método responsável por retornar o conteúdo (view) da Home
-    public static function getHome($request){
+    // método responsável por retornar o conteúdo (view) da Atividade
+    public static function getCentrals(){
 
-      // view da home
-      $content = View::render('pages/home', [
+      // view da Atividade
+      $content = View::render('pages/centrals', [
         'header'  => self::getHeader(),
         'footer'  => self::getFooter()
       ]);
 
       // retornar a view da página
-      return parent::getPage('Home | Desbug', $content);
+      return parent::getPage('Centrais de ajuda | Desbug', $content);
     }
 
     // método responsável por renderizar o topo da página
