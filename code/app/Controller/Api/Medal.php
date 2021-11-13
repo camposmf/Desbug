@@ -118,13 +118,81 @@
 
             // retornar os dados para api
             return [
-                'id_usuario'        =>  (int)$objMedal->id_medalha,
-                'ds_usuario'        =>  $objMedal->ds_medalha,
-                'img_usuario'       =>  $objMedal->img_medalha,
-                'vl_medalha_total'  =>  (float)$objMedal->vl_medalha_total,
+                'id_medalha'        =>  (int)$objMedal->id_medalha,
+                'ds_medalha'        =>  $objMedal->ds_medalha,
+                'img_medalha'       =>  $objMedal->img_medalha,
+                'vl_medalha_total'  =>  (float)$objMedal->vl_medalha_total
             ];
         }
 
-    }
+        // método responsável por alterar os valores das medalhas
+        public static function setEditMedal($request, $id){
+            // checar se paramêtro é numérico
+            if(!is_numeric($id)){
+                throw new \Exception("O id '".$id."' não é válido", 400);
+            }
 
+            // post vars
+            $postVars = $request->getPostVars();
+
+            // validar campos obrigatórios
+            self::handleRequiredFields($postVars);
+
+            // buscar usuário no banco
+            $objMedal = EntityMedal::getMedalById($id);
+
+            // valida a instância
+            if(!$objMedal instanceof EntityMedal){
+                throw new \Exception("A Medalha '".$id."' não encontrada", 404);
+            }
+
+            // buscar usuário no banco
+            $objMedalByName = EntityMedal::getMedalByName($postVars['ds_medalha']);
+            if($objMedalByName instanceof EntityMedal){
+                throw new \Exception("A medalha '".$postVars['ds_medalha']."' já existe na base de dados", 400);
+            }
+
+            // carregar os dados na user model
+            $objMedal->ds_medalha       =   $postVars['ds_medalha'];
+            $objMedal->img_medalha      =   $postVars['img_medalha'];
+            $objMedal->vl_medalha_total =   $postVars['vl_medalha_total'];
+
+            // atualiza dados no banco de dados
+            $objMedal->updateMedal();
+
+            // retornar os dados para api
+            return [
+                'id_medalha'        =>  (int)$objMedal->id_medalha,
+                'ds_medalha'        =>  $objMedal->ds_medalha,
+                'img_medalha'       =>  $objMedal->img_medalha,
+                'vl_medalha_total'  =>  (float)$objMedal->vl_medalha_total
+            ];
+        }
+
+        // método responsável por deletar medalhas
+        public static function setDeleteMedal($request, $id){
+
+            // checar se paramêtro é numérico
+            if(!is_numeric($id)){
+                throw new \Exception("O id '".$id."' não é válido", 400);
+            }
+
+            // buscar medalha no banco
+            $objMedal = EntityMedal::getMedalById($id);
+
+            // valida a instância
+            if(!$objMedal instanceof EntityMedal){
+                throw new \Exception("A Medalha com id '".$id."' não foi encontrada", 404);
+            }
+
+            // deleta dados no banco de dados
+            $objMedal->deleteMedal();
+
+            // retornar o sucesso da exclusão
+            return [
+                'sucesso' => true
+            ];
+
+        }
+    }
 ?>
