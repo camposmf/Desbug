@@ -178,7 +178,7 @@
             $objUser->ds_email       =  $postVars['ds_email']      ?? $postVars['ds_email'];
             $objUser->dt_nascimento  =  $postVars['dt_nascimento'] ?? $postVars['dt_nascimento'];
             $objUser->img_usuario    =  isset($postVars['img_usuario']) ? $postVars['img_usuario'] : null;
-            $objUser->ds_senha       =  password_hash($postVars['ds_senha'], PASSWORD_DEFAULT) ?? $postVars['ds_senha'];
+            $objUser->ds_senha       =  isset($postVars['ds_senha']) ? password_hash($postVars['ds_senha'], PASSWORD_DEFAULT) : $postVars['ds_senha'];
 
             // atualiza dados no banco de dados
             $objUser->updateUser();

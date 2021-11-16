@@ -7,4 +7,7 @@
 
   // incluí rota de Medalhas
   include __DIR__ . '/api/medals.php';
+
+  // incluí rota de Categorias
+  include __DIR__ . '/api/category.php';
 ?>
