@@ -35,7 +35,7 @@
         }
     ]);
 
-    // rota de alteração de medalha
+    // rota de alteração de categoria
     $objRouter->put('/api/categories/{id}', [
         'middlewares' => [
             'api',

@@ -56,5 +56,26 @@
     public static function getCategoryByDescription($categoria){
       return (new Database('tb_categoria'))->select('ds_categoria = "'.$categoria.'"')->fetchObject(self::class);
     }
+
+    // método responsável por listar os registros da view criada no banco de dados
+    public static function getCategoryByView($where = null, $order = null, $limit = null, $fields = '*'){
+      return (new Database('vw_categoria'))->select($where, $order, $limit, $fields);
+    }
+
+    // método responsável por carregador os dados da view
+    public static function loadCategoryViewValues($objCategoryUser){
+      $objUser = new User();
+      $objUser->id_usuario    =  (int)$objCategoryUser->id_usuario;
+      $objUser->nm_nickname   =  $objCategoryUser->nm_nickname;
+      $objUser->nm_usuario    =  $objCategoryUser->nm_usuario;
+      $objUser->ds_email      =  $objCategoryUser->ds_email;
+      $objUser->dt_nascimento =  $objCategoryUser->dt_nascimento;
+      $objUser->img_usuario   =  $objCategoryUser->img_usuario;
+      unset($objUser->ds_senha);
+
+      return $objUser;
+  }
+
+
   }
 ?>
