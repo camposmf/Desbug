@@ -90,7 +90,7 @@
             // validar se usuário existe
             $objUser = EntityUser::getUserById($postVars['id_usuario']);
             if(!$objUser instanceof EntityUser){
-                throw new \Exception("O usuário '".$postVars['id_usuário']."' não foi encontrada no banco de dados", 404);
+                throw new \Exception("O usuário '".$postVars['id_usuario']."' não foi encontrada no banco de dados", 404);
             }
             
             // carregar os dados
@@ -133,6 +133,7 @@
             // validar campos obrigatórios
             self::handleRequiredFields($postVars);
 
+            // validar se pontuação existe
             $objPoint = EntityPoints::getPointsById($id);
             if(!$objPoint instanceof EntityPoints){
                 throw new \Exception("Pontuação '".$id."' não encontrada", 404);
@@ -147,7 +148,7 @@
             // validar se usuário existe
             $objUser = EntityUser::getUserById($postVars['id_usuario']);
             if(!$objUser instanceof EntityUser){
-                throw new \Exception("O usuário '".$postVars['id_usuário']."' não foi encontrada no banco de dados", 404);
+                throw new \Exception("O usuário '".$postVars['id_usuario']."' não foi encontrada no banco de dados", 404);
             }
             
             // carregar os dados
