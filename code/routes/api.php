@@ -14,4 +14,7 @@
   // incluí rota de Categorias
   include __DIR__ . '/api/category.php';
 
+  // incluí rota de Nível de acesso
+  include __DIR__ . '/api/accessLevel.php';
+
 ?>
