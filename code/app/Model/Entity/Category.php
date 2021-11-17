@@ -2,6 +2,7 @@
   namespace App\Model\Entity;
 
   use \App\Db\Database;
+  use \App\Model\Entity\User;
 
   Class Category {
     public $id_categoria;
@@ -74,8 +75,6 @@
       unset($objUser->ds_senha);
 
       return $objUser;
-  }
-
-
+    }
   }
 ?>

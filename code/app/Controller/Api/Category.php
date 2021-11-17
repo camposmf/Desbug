@@ -33,7 +33,7 @@
 
                 $itens[] = [
                     'id_categoria'   =>  (int)$objCategoryUser->id_categoria,
-                    'users'          =>  $objUser,
+                    'usuario'       =>  $objUser,
                     'ds_categoria'   =>  $objCategoryUser->ds_categoria,
                     'img_categoria'  =>  $objCategoryUser->img_categoria
                 ];
@@ -76,7 +76,7 @@
             // retornar categoria
             return [
                 'id_categoria'   =>  (int)$objCategory->id_categoria,
-                'users'          =>  $objUser,
+                'usuario'       =>  $objUser,
                 'ds_categoria'   =>  $objCategory->ds_categoria,
                 'img_categoria'  =>  $objCategory->img_categoria
             ];
@@ -90,8 +90,9 @@
                 throw new \Exception('O campo Id do Usuário é obrigatório', 400);
             }
 
+            // validar se o id do usuário é númerico
             if(!is_numeric($postVars['id_usuario'])){
-                throw new \Exception('O campo Id do Usuário inválido', 400);
+                throw new \Exception("Id do usuário '".$postVars['id_usuario']."' é inválido", 400);
             }
 
             // validar campo descrição da categoria
@@ -147,7 +148,7 @@
             // retornar usuário
             return [
                 'id_categoria'    =>  (int)$objCategory->id_categoria,
-                'users'           =>  $objUser,
+                'usuario'        =>  $objUser,
                 'ds_categoria'    =>  $objCategory->ds_categoria,
                 'img_categoria'   =>  $objCategory->img_categoria,
             ];
@@ -203,7 +204,7 @@
             // retornar usuário
             return [
                 'id_categoria'    =>  (int)$objCategory->id_categoria,
-                'users'           =>  $objUser,
+                'usuario'        =>  $objUser,
                 'ds_categoria'    =>  $objCategory->ds_categoria,
                 'img_categoria'   =>  $objCategory->img_categoria,
             ];
