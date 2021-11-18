@@ -20,4 +20,7 @@
   // incluí rota de Tempo de Acesso
   include __DIR__ . '/api/activeTime.php';
 
+  // incluí rota de Situação
+  include __DIR__ . '/api/situation.php';
+
 ?>
