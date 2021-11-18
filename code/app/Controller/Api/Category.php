@@ -13,27 +13,27 @@
             $itens = [];
 
             // quantidade total de registros
-            $quantidadeTotal = EntityCategory::getCategories(null, null, null, 'COUNT(*) as qtd')->fetchObject()->qtd;
+            $totalCount = EntityCategory::getCategories(null, null, null, 'COUNT(*) as qtd')->fetchObject()->qtd;
 
             // página atual
             $queryParams = $request->getQueryParams();
-            $paginaAtual = $queryParams['page'] ?? 1;
+            $currentPage = $queryParams['page'] ?? 1;
 
             // instância da paginação
-            $objPagination = new Pagination($quantidadeTotal, $paginaAtual, 5);
+            $objPagination = new Pagination($totalCount, $currentPage, 5);
 
             // resultados da página
-            $results = EntityCategory::getCategoryByView(null, null, $objPagination->getLimit());
+            $results = EntityCategory::getCategories(null, null, $objPagination->getLimit());
 
             // retornar valores
             while($objCategoryUser = $results->fetchObject(EntityCategory::class)){
 
                 // objeto com os valores do usuário
-                $objUser = EntityCategory::loadCategoryViewValues($objCategoryUser);
+                $objUser = EntityCategory::loadUser($objCategoryUser);
 
                 $itens[] = [
                     'id_categoria'   =>  (int)$objCategoryUser->id_categoria,
-                    'usuario'       =>  $objUser,
+                    'usuario'        =>  $objUser,
                     'ds_categoria'   =>  $objCategoryUser->ds_categoria,
                     'img_categoria'  =>  $objCategoryUser->img_categoria
                 ];
@@ -67,11 +67,10 @@
             }
 
             // recuperar valor da view
-            $selectViewResult = EntityCategory::getCategoryByView('id_usuario = '.$objCategory->id_usuario);
-            $objCategoryUser  = $selectViewResult->fetchObject(EntityCategory::class);
+            $categoryResult = EntityCategory::getCategoryUserById('id_usuario = '.$objCategory->id_usuario);
 
             // carregar objeto do usuário com o id da tabela categoria
-            $objUser = EntityCategory::loadCategoryViewValues($objCategoryUser);
+            $objUser = EntityCategory::loadUser($categoryResult);
 
             // retornar categoria
             return [
@@ -139,11 +138,10 @@
             $objCategory->insertNewCategory();
 
             // recuperar valor da view
-            $selectViewResult = EntityCategory::getCategoryByView('id_usuario = '.$objCategory->id_usuario);
-            $objCategoryUser  = $selectViewResult->fetchObject(EntityCategory::class);
+            $categoryResult = EntityCategory::getCategoryUserById('id_usuario = '.$objCategory->id_usuario);
 
             // carregar objeto do usuário com o id da tabela categoria
-            $objUser = EntityCategory::loadCategoryViewValues($objCategoryUser);
+            $objUser = EntityCategory::loadUser($categoryResult);
 
             // retornar categoria
             return [
@@ -195,11 +193,10 @@
             $objCategory->updateCategory();
 
             // recuperar valor da view
-            $selectViewResult = EntityCategory::getCategoryByView('id_usuario = '.$objCategory->id_usuario);
-            $objCategoryUser  = $selectViewResult->fetchObject(EntityCategory::class);
+            $categoryResult = EntityCategory::getCategoryUserById('id_usuario = '.$objCategory->id_usuario);
 
             // carregar objeto do usuário com o id da tabela categoria
-            $objUser = EntityCategory::loadCategoryViewValues($objCategoryUser);
+            $objUser = EntityCategory::loadUser($categoryResult);
 
             // retornar categoria
             return [
