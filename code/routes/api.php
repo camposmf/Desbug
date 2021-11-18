@@ -23,7 +23,10 @@
   // incluí rota de Situação
   include __DIR__ . '/api/situations.php';
 
-  // incluí rota de Situação
+  // incluí rota de Atividades
   include __DIR__ . '/api/activities.php';
+
+  // incluí rota de Coleção de dados
+  include __DIR__ . '/api/dataCollect.php';
 
 ?>
