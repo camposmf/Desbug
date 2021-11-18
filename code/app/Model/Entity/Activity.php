@@ -1,11 +1,15 @@
 <?php
+
   namespace App\Model\Entity;
-  use App\Db\Database;
+
+  use \App\Db\Database;
+  use \App\Model\Entity\Category;
+  use \App\Model\Entity\Situation;
+  use \App\Model\Entity\User as EntityUser;
 
   Class Activity {
 
     public $id_atividade;
-    public $id_usuario;
     public $id_categoria;
     public $id_situacao;
     public $img_atividade;
@@ -16,7 +20,6 @@
 
       // insere uma atividade no banco de dados
       $this->id_atividade = (new Database('tb_atividade'))->insert([
-        'id_usuario'    => $this->id_usuario,
         'id_categoria'  => $this->id_categoria,
         'id_situacao'   => $this->id_situacao,
         'img_atividade' => $this->img_atividade,
@@ -31,7 +34,6 @@
     // método responsável por atualizar registros no banco de dados
     public function updateActivity(){
       return (new Database('tb_atividade'))->update('id_atividade = '.$this->id_atividade, [
-        'id_usuario'    => $this->id_usuario,
         'id_categoria'  => $this->id_categoria,
         'id_situacao'   => $this->id_situacao,
         'img_atividade' => $this->img_atividade,
@@ -40,7 +42,7 @@
     }
 
     // método responsável por deletar uma atividade no banco de dados
-    public function deleteUser(){
+    public function deleteActivity(){
       return (new Database('tb_atividade'))->delete('id_atividade = '.$this->id_atividade);
     }
 
@@ -50,15 +52,37 @@
     }
 
     // método responsável por obter uma atividade filtrados por id
-    public static function getUserById($id){
+    public static function getActivityById($id){
       return (new Database('tb_atividade'))->select('id_atividade = "'.$id.'"')->fetchObject(self::class);
     }
 
     // método responsável por obter uma atividade filtrados pela descrição da atividade
-    public static function getUserByDescription($description){
+    public static function getActivityByDescription($description){
       return (new Database('tb_atividade'))->select('ds_atividade = "'.$description.'"')->fetchObject(self::class);
     }
 
+    // método responsável por retornar um objeto da entidade categoria
+    public static function loadCategory($objParamCategory){
 
+      // buscar objeto usuário
+      $objUser = EntityUser::getUserById($objParamCategory->id_usuario);
+      $objUser->id_usuario = (int)$objUser->id_usuario;
+      
+      return [
+        'id_categoria'  => (int)$objParamCategory->id_categoria,
+        'usuario'       => $objUser,
+        'img_categoria' => $objParamCategory->img_categoria,
+        'ds_categoria'  => $objParamCategory->ds_categoria,
+      ];
+    }
+
+    // método responsável por retornar um objeto da entidade situação
+    public static function loadSituation($objParamSituation){
+      $objSituation = new Situation();
+      $objSituation->id_situacao  = (int)$objParamSituation->id_situacao;
+      $objSituation->tp_situacao  = $objParamSituation->tp_situacao;
+
+      return $objSituation;
+    }
   }
 ?>
