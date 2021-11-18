@@ -12,7 +12,7 @@
   include __DIR__ . '/api/points.php';
   
   // incluí rota de Categorias
-  include __DIR__ . '/api/category.php';
+  include __DIR__ . '/api/categories.php';
 
   // incluí rota de Nível de Acesso
   include __DIR__ . '/api/accessLevel.php';
@@ -21,6 +21,9 @@
   include __DIR__ . '/api/activeTime.php';
 
   // incluí rota de Situação
-  include __DIR__ . '/api/situation.php';
+  include __DIR__ . '/api/situations.php';
+
+  // incluí rota de Situação
+  include __DIR__ . '/api/activities.php';
 
 ?>
