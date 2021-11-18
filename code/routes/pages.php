@@ -50,11 +50,7 @@
   // rota home
   $objRouter->get('/home', [
     function($request){
-<<<<<<< HEAD
       return new Response(200, Pages\Home::getHome($request));
-=======
-      return new Response(200, Pages\Profiles::getProfiles($request));
->>>>>>> 737629d84f916b04e679b730bd5ad6ed039b4875
     }
   ]);
 
@@ -65,17 +61,10 @@
     }
   ]);
 
-<<<<<<< HEAD
   // rota perfil
   $objRouter->post('/perfil', [
     function($request){
       return new Response(200, Pages\Profile::getProfile($request));
-=======
-  // rota home
-  $objRouter->get('/home', [
-    function($request){
-      return new Response(200, Pages\Index::getIndex($request));
->>>>>>> 737629d84f916b04e679b730bd5ad6ed039b4875
     }
   ]);
 
@@ -103,37 +92,7 @@
   // rota centrais de ajuda
   $objRouter->get('/centrais', [
     function($request){
-<<<<<<< HEAD
       return new Response(200, Pages\Centrais::getCentrais($request));
     }
   ]);
-=======
-      return new Response(200, Pages\Vent::getVent($request));
-    }
-]);
-
-// rota centrais de ajuda
-$objRouter->get('/centrais', [
-  function($request){
-    return new Response(200, Pages\Centrals::getCentrals($request));
-  }
-]);
-
-
-// rota editar perfil
-$objRouter->get('/editar', [
-  function($request){
-    return new Response(200, Pages\EditProfile::getEditProfile($request));
-  }
-]);
-
-// rota métricas
-$objRouter->get('/metricas', [
-  function($request){
-    return new Response(200, Pages\Metrics::getMetrics($request));
-  }
-]);
-
-
->>>>>>> 737629d84f916b04e679b730bd5ad6ed039b4875
 ?>

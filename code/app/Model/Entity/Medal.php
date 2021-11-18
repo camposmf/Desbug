@@ -25,6 +25,18 @@
       return true;
     }
 
+    public function updateMedal(){
+      return (new Database('tb_medalha'))->update('id_medalha = '.$this->id_medalha, [
+        'ds_medalha'        =>  $this->ds_medalha,
+        'img_medalha'       =>  $this->img_medalha,
+        'vl_medalha_total'  =>  $this->vl_medalha_total
+      ]);
+    }
+
+    public function deleteMedal(){
+      return (new Database('tb_medalha'))->delete('id_medalha = '.$this->id_medalha);
+    }
+
     // método responsável por obter as medalhas no banco
     public static function getMedals($where = null, $order = null, $limit = null, $fields = '*'){
       return (new Database('tb_medalha'))->select($where, $order, $limit, $fields);

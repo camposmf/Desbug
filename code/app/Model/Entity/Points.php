@@ -1,26 +1,24 @@
 <?php
   namespace App\Model\Entity;
 
-  Class Points {
-    public $id;
-    public $User;
-    public $Medals;
-    public $value;
+  use \App\Db\Database;
+  use \App\Model\Entity\User;
+  use \App\Model\Entity\Medal;
 
-    // método responsável por instânciar a classe
-    public function __construct(){
-      $this->User   = new User();
-      $this->Medals = new Medals();
-    }
+  Class Points {
+    public $id_pontuacao;
+    public $id_medalha;
+    public $id_usuario;
+    public $vl_pontuacao;
 
     // método responsável por inserir registros no banco de dados
-    public function insert(){
+    public function insertNewPoints(){
 
       // insere tempo de atividade no banco de dados
-      $this->id = (new Database('tb_pontuacao'))->insert([
-        'id_usuario'    => $this->User->id,
-        'id_medalha'    => $this->Medals->id,
-        'vl_pontuacao'  => $this->value
+      $this->id_pontuacao = (new Database('tb_pontuacao'))->insert([
+        'id_usuario'    => $this->id_usuario,
+        'id_medalha'    => $this->id_medalha,
+        'vl_pontuacao'  => $this->vl_pontuacao
       ]);
 
       // retornar sucesso
@@ -29,21 +27,64 @@
     }
 
     // método responsável por atualizar registros no banco de dados
-    public function update(){
-      $objDatabase = new Database('tb_pontuacao');
-      $objDatabase->update('id_pontuacao = '.$this->id, [
-        'id_usuario'    => $this->User->id,
-        'id_medalha'    => $this->Medals->id,
-        'vl_pontuacao'  => $this->value
+    public function updatePoints(){
+      return (new Database('tb_pontuacao'))->update('id_pontuacao = '.$this->id_pontuacao, [
+        'id_usuario'    => $this->id_usuario,
+        'id_medalha'    => $this->id_medalha,
+        'vl_pontuacao'  => $this->vl_pontuacao
       ]);
     }
 
-    // método responsável por obter as pontuações do banco 
-    public static function get($where = null, $order = null, $limit = null){
-      $objDatabase = new Database('tb_pontuacao');
-      return $objDatabase->select($where, $order, $limit)
-                         ->fetchAll(PDO::FETCH_CLASS, self::class);
+    // método responsável por listar os dados da view de categoria
+    public static function getPointsByView($where = null, $order = null, $limit = null, $fields = '*'){
+      return (new Database('tb_pontuacao'))->select($where, $order, $limit, $fields);
     }
-    
+
+    // método responsável por obter pontos filtrados por id
+    public static function getPointsById($id){
+      return (new Database('tb_pontuacao'))->select('id_pontuacao = "'.$id.'"')->fetchObject(self::class);
+    }
+
+    // metódo responsável por obter medalhas
+    public static function getItemsById($id){
+      return (new Database('vw_pontuacao'))->select('id_usuario = "'.$id.'"');
+    }
+
+    // método responsável por carregar os dados da medalha
+    public static function loadPointsMedalViewValues($objParamMedal){
+
+      // array de medalhas
+      $itens = [];
+
+      while($objMedalItem = $objParamMedal->fetchObject(self::class)){
+        
+        $itens[] = [
+          'id_medalha'        =>  (int)$objMedalItem->id_medalha,
+          'ds_medalha'        =>  $objMedalItem->ds_medalha,
+          'img_medalha'       =>  $objMedalItem->img_medalha,
+          'vl_medalha_total'  =>  (float)$objMedalItem->vl_medalha_total
+        ];
+      }
+
+      // retornar valor
+      return $itens;
+    }
+
+    // método responsável por carrega os dados do usuário
+    public static function loadPointsUserViewValues($objParamUser){
+
+      // mapear os campos
+      $objUser = new User();
+      $objUser->id_usuario    = (int)$objParamUser->id_usuario;
+      $objUser->nm_nickname   = $objParamUser->nm_nickname;
+      $objUser->nm_usuario    = $objParamUser->nm_usuario;
+      $objUser->ds_email      = $objParamUser->ds_email;
+      $objUser->dt_nascimento = $objParamUser->dt_nascimento;
+      $objUser->img_usuario   = $objParamUser->img_usuario;
+      unset($objUser->ds_senha);
+
+      // retornar valor
+      return $objUser;
+    }
   }
 ?>
