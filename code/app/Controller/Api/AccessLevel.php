@@ -30,8 +30,8 @@
             // retornar valor para api
             return [
                 'id_nivel_acesso' => (int)$objAccessLevel->id_nivel_acesso,
-                'tp_nivel_acesso' => $objAccessLevel->tp_nivel_acesso,
-                'usuario'         => $objUser
+                'usuario'         => $objUser,
+                'tp_nivel_acesso' => $objAccessLevel->tp_nivel_acesso
             ];
         }
 
@@ -72,10 +72,13 @@
             // buscar variáveis do post
             $postVars = $request->getPostVars();
 
+            // validar campos obrigatórios
             self::handleRequiredFields($postVars);            
 
-            // validar se usuário existe
+            // buscar usuário pelo id
             $objUser = EntityUser::getUserById($postVars['id_usuario']);
+
+            // validar se usuário existe
             if(!$objUser instanceof EntityUser){
                 throw new \Exception("O usuário '".$postVars['id_usuario']."' não foi encontrada no banco de dados", 404);
             }
@@ -88,15 +91,15 @@
             // inserir registro no banco de dados
             $objAccessLevel->insertNewAccessLevel();
 
-            // recuperar usuário da view
-            $selectUserResult = EntityUser::getUserById($objAccessLevel->id_usuario);
-            $objUser = EntityAccessLevel::loadAccessLevelsUserViewValues($selectUserResult);
+            // recuperar objeto do usuário
+            $userResult = EntityUser::getUserById($objAccessLevel->id_usuario);
+            $objUser = EntityAccessLevel::loadAccessLevelsUserViewValues($userResult);
 
             // retornar registro cadastrado
             return [
                 'id_nivel_acesso' => (int)$objAccessLevel->id_nivel_acesso,
-                'tp_nivel_acesso' => $objAccessLevel->tp_nivel_acesso,
-                'usuario'         => $objUser
+                'usuario'         => $objUser,
+                'tp_nivel_acesso' => $objAccessLevel->tp_nivel_acesso
             ];
         }
 
@@ -111,16 +114,21 @@
             // buscar variáveis do post
             $postVars = $request->getPostVars();
 
+            // validar campos obrigatórios
             self::handleRequiredFields($postVars);            
 
-            // validar se nível de acesso existe
+            // buscar registro pelo id
             $objAccessLevel = EntityAccessLevel::getAccessLevelById($id);
+
+            // validar se nível de acesso existe
             if(!$objAccessLevel instanceof EntityAccessLevel){
                 throw new \Exception("Nível de acesso '".$id."' não encontrado", 404);
             }
 
-            // validar se usuário existe
+            // buscar usuário pelo id
             $objUser = EntityUser::getUserById($postVars['id_usuario']);
+
+            // validar se usuário existe
             if(!$objUser instanceof EntityUser){
                 throw new \Exception("O usuário '".$postVars['id_usuario']."' não foi encontrada no banco de dados", 404);
             }
@@ -132,15 +140,15 @@
             // inserir registro no banco de dados
             $objAccessLevel->updateAccessLevel();
 
-            // recuperar usuário da view
+            // recuperar objeto usuário
             $selectUserResult = EntityUser::getUserById($objAccessLevel->id_usuario);
             $objUser = EntityAccessLevel::loadAccessLevelsUserViewValues($selectUserResult);
 
             // retornar registro atualizado
             return [
                 'id_nivel_acesso' => (int)$objAccessLevel->id_nivel_acesso,
-                'tp_nivel_acesso' => $objAccessLevel->tp_nivel_acesso,
-                'usuario'         => $objUser
+                'usuario'         => $objUser,
+                'tp_nivel_acesso' => $objAccessLevel->tp_nivel_acesso
             ];
         }
     }

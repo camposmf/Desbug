@@ -14,7 +14,7 @@
     ]);
 
     // rota para cadastrar tempo de acesso
-    $objRouter->post('/api/access-level', [
+    $objRouter->post('/api/active-time', [
         'middlewares' => [
             'api',
             'user-basic-auth'
@@ -25,7 +25,7 @@
     ]);
 
     // rota para atualizar tempo de acesso
-    $objRouter->put('/api/access-level/{id}', [
+    $objRouter->put('/api/active-time/{id}', [
         'middlewares' => [
             'api',
             'user-basic-auth'

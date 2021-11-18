@@ -76,7 +76,7 @@
             // retornar categoria
             return [
                 'id_categoria'   =>  (int)$objCategory->id_categoria,
-                'usuario'       =>  $objUser,
+                'usuario'        =>  $objUser,
                 'ds_categoria'   =>  $objCategory->ds_categoria,
                 'img_categoria'  =>  $objCategory->img_categoria
             ];
@@ -129,7 +129,7 @@
                 throw new \Exception("Categoria '".$postVars['ds_categoria']."' já foi cadastrada.", 400);
             }
 
-            // carregar os dados na user model
+            // carregar os dados
             $objCategory = new EntityCategory();
             $objCategory->id_usuario    =  $postVars['id_usuario'];
             $objCategory->ds_categoria  =  $postVars['ds_categoria'];
@@ -145,10 +145,10 @@
             // carregar objeto do usuário com o id da tabela categoria
             $objUser = EntityCategory::loadCategoryViewValues($objCategoryUser);
 
-            // retornar usuário
+            // retornar categoria
             return [
                 'id_categoria'    =>  (int)$objCategory->id_categoria,
-                'usuario'        =>  $objUser,
+                'usuario'         =>  $objUser,
                 'ds_categoria'    =>  $objCategory->ds_categoria,
                 'img_categoria'   =>  $objCategory->img_categoria,
             ];
@@ -186,12 +186,12 @@
                 throw new \Exception("Categoria '".$postVars['ds_categoria']."' já foi cadastrada.", 400);
             }
 
-            // carregar os dados na user model
+            // carregar os dados
             $objCategory->id_usuario    =  $postVars['id_usuario'];
             $objCategory->ds_categoria  =  $postVars['ds_categoria'];
             $objCategory->img_categoria =  $postVars['img_categoria'];
             
-            // cadastrar dados no banco de dados
+            // atualizar dados no banco de dados
             $objCategory->updateCategory();
 
             // recuperar valor da view
@@ -201,10 +201,10 @@
             // carregar objeto do usuário com o id da tabela categoria
             $objUser = EntityCategory::loadCategoryViewValues($objCategoryUser);
 
-            // retornar usuário
+            // retornar categoria
             return [
                 'id_categoria'    =>  (int)$objCategory->id_categoria,
-                'usuario'        =>  $objUser,
+                'usuario'         =>  $objUser,
                 'ds_categoria'    =>  $objCategory->ds_categoria,
                 'img_categoria'   =>  $objCategory->img_categoria,
             ];
