@@ -138,7 +138,6 @@
                 'nm_nickname'   =>  $objUser->nm_nickname,
                 'nm_usuario'    =>  $objUser->nm_usuario,
                 'ds_email'      =>  $objUser->ds_email,
-                'ds_senha'      =>  $objUser->ds_senha,
                 'dt_nascimento' =>  $objUser->dt_nascimento,
                 'img_usuario'   =>  $objUser->img_usuario
             ];
@@ -189,7 +188,6 @@
                 'nm_nickname'   =>  $objUser->nm_nickname,
                 'nm_usuario'    =>  $objUser->nm_usuario,
                 'ds_email'      =>  $objUser->ds_email,
-                'ds_senha'      =>  $objUser->ds_senha,
                 'dt_nascimento' =>  $objUser->dt_nascimento,
                 'img_usuario'   =>  $objUser->img_usuario
             ];

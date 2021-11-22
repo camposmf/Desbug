@@ -28,12 +28,8 @@
             // retornar valores
             while($objCategoryUser = $results->fetchObject(EntityCategory::class)){
 
-                // objeto com os valores do usuário
-                $objUser = EntityCategory::loadUser($objCategoryUser);
-
                 $itens[] = [
                     'id_categoria'   =>  (int)$objCategoryUser->id_categoria,
-                    'usuario'        =>  $objUser,
                     'ds_categoria'   =>  $objCategoryUser->ds_categoria,
                     'img_categoria'  =>  $objCategoryUser->img_categoria
                 ];
@@ -66,16 +62,9 @@
                 throw new \Exception('O usuário '.$id.' não foi encontrado.', 404);
             }
 
-            // recuperar valor da view
-            $categoryResult = EntityCategory::getCategoryUserById('id_usuario = '.$objCategory->id_usuario);
-
-            // carregar objeto do usuário com o id da tabela categoria
-            $objUser = EntityCategory::loadUser($categoryResult);
-
             // retornar categoria
             return [
                 'id_categoria'   =>  (int)$objCategory->id_categoria,
-                'usuario'        =>  $objUser,
                 'ds_categoria'   =>  $objCategory->ds_categoria,
                 'img_categoria'  =>  $objCategory->img_categoria
             ];
@@ -83,16 +72,6 @@
 
         // // método responsável por validar os métodos obrigatórios da entidade
         private static function handleRequiredFields($postVars){
-
-             // validar id do usuário
-            if(!isset($postVars['id_usuario'])){
-                throw new \Exception('O campo Id do Usuário é obrigatório', 400);
-            }
-
-            // validar se o id do usuário é númerico
-            if(!is_numeric($postVars['id_usuario'])){
-                throw new \Exception("Id do usuário '".$postVars['id_usuario']."' é inválido", 400);
-            }
 
             // validar campo descrição da categoria
             if(!isset($postVars['ds_categoria'])){
@@ -116,12 +95,6 @@
             // validar campos obrigatórios
             self::handleRequiredFields($postVars);
 
-            // validar se o id do usuário existe
-            $objUser = EntityUser::getUserById($postVars['id_usuario']);
-            if(!$objUser instanceof EntityUser){
-                throw new \Exception("Usuário '".$postVars['id_usuario']."' não encontrado.", 404);
-            }
-
             // valida a duplicação de descrição da categoria
             $objCategoryDescription = EntityCategory::getCategoryByDescription($postVars['ds_categoria']);
             if($objCategoryDescription instanceof EntityCategory){
@@ -130,23 +103,15 @@
 
             // carregar os dados
             $objCategory = new EntityCategory();
-            $objCategory->id_usuario    =  $postVars['id_usuario'];
             $objCategory->ds_categoria  =  $postVars['ds_categoria'];
             $objCategory->img_categoria =  $postVars['img_categoria'];
             
             // cadastrar dados no banco de dados
             $objCategory->insertNewCategory();
 
-            // recuperar valor da view
-            $categoryResult = EntityCategory::getCategoryUserById('id_usuario = '.$objCategory->id_usuario);
-
-            // carregar objeto do usuário com o id da tabela categoria
-            $objUser = EntityCategory::loadUser($categoryResult);
-
             // retornar categoria
             return [
                 'id_categoria'    =>  (int)$objCategory->id_categoria,
-                'usuario'         =>  $objUser,
                 'ds_categoria'    =>  $objCategory->ds_categoria,
                 'img_categoria'   =>  $objCategory->img_categoria,
             ];
@@ -172,12 +137,6 @@
                 throw new \Exception("Categoria '".$id."' não encontrada", 404);
             }
 
-            // validar se o id do usuário existe
-            $objUser = EntityUser::getUserById($postVars['id_usuario']);
-            if(!$objUser instanceof EntityUser){
-                throw new \Exception("Usuário '".$postVars['id_usuario']."' não encontrado.", 404);
-            }
-
             // validar a duplicação de descrição da categoria
             $objCategoryDescription = EntityCategory::getCategoryByDescription($postVars['ds_categoria']);
             if($objCategoryDescription instanceof EntityCategory && $objCategoryDescription->id_usuario == $objUser->id_usuario){
@@ -192,16 +151,9 @@
             // atualizar dados no banco de dados
             $objCategory->updateCategory();
 
-            // recuperar valor da view
-            $categoryResult = EntityCategory::getCategoryUserById('id_usuario = '.$objCategory->id_usuario);
-
-            // carregar objeto do usuário com o id da tabela categoria
-            $objUser = EntityCategory::loadUser($categoryResult);
-
             // retornar categoria
             return [
                 'id_categoria'    =>  (int)$objCategory->id_categoria,
-                'usuario'         =>  $objUser,
                 'ds_categoria'    =>  $objCategory->ds_categoria,
                 'img_categoria'   =>  $objCategory->img_categoria,
             ];
