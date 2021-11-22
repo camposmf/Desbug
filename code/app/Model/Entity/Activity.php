@@ -63,17 +63,12 @@
 
     // método responsável por retornar um objeto da entidade categoria
     public static function loadCategory($objParamCategory){
+      $objCategory = new Category();
+      $objCategory->id_categoria  = (int)$objParamCategory->id_categoria;
+      $objCategory->ds_categoria  = $objParamCategory->ds_categoria;
+      $objCategory->img_categoria = $objParamCategory->img_categoria;
 
-      // buscar objeto usuário
-      $objUser = EntityUser::getUserById($objParamCategory->id_usuario);
-      $objUser->id_usuario = (int)$objUser->id_usuario;
-      
-      return [
-        'id_categoria'  => (int)$objParamCategory->id_categoria,
-        'usuario'       => $objUser,
-        'img_categoria' => $objParamCategory->img_categoria,
-        'ds_categoria'  => $objParamCategory->ds_categoria,
-      ];
+      return $objCategory;
     }
 
     // método responsável por retornar um objeto da entidade situação

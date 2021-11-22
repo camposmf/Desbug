@@ -214,7 +214,7 @@
 
             // valida a duplicação da descrição
             $objActivityDescription = EntityActivity::getActivityByDescription($postVars['ds_atividade']);
-            if($objActivityDescription instanceof EntityActivity && $objCategoryResult->id_usuario != $request->user->id_usuario){
+            if($objActivityDescription instanceof EntityActivity){
                 throw new \Exception("A descrição da atividade '".$postVars['ds_atividade']."' já existe no banco de dados.", 400);
             }
 
