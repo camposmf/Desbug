@@ -9,6 +9,7 @@
 
   Class DataCollect {
     public $id_coleta_dado;
+    public $id_usuario;
     public $id_atividade;
     public $vl_sentimento_ant;
     public $vl_sentimento_prox;
@@ -18,6 +19,7 @@
 
       // insere usuário no banco de dados
       $this->id_coleta_dado = (new Database('tb_coleta_dado'))->insert([
+        'id_usuario'          => $this->id_usuario,
         'id_atividade'        => $this->id_atividade,
         'vl_sentimento_ant'   => $this->vl_sentimento_ant,
         'vl_sentimento_prox'  => $this->vl_sentimento_prox
@@ -30,6 +32,7 @@
     // método responsável por atualizar registros no banco de dados
     public function updateDataCollect(){
       return (new Database('tb_coleta_dado'))->update('id_coleta_dado = "'.$this->id_coleta_dado.'"', [
+        'id_usuario'          => $this->id_usuario,
         'id_atividade'        => $this->id_atividade,
         'vl_sentimento_ant'   => $this->vl_sentimento_ant,
         'vl_sentimento_prox'  => $this->vl_sentimento_prox
@@ -41,42 +44,16 @@
       return (new Database('tb_coleta_dado'))->select('id_coleta_dado = '.$id)->fetchObject(self::class);
     }
 
-    // método responsável por retornar um objeto categoria
-    private static function getCategory($id_categoria){
-
-      // buscar categoria
-      $objCategory = EntityCategory::getCategoryById($id_categoria);
-
-      // buscar usuário
-      $objUser = EntityUser::getUserById($objCategory->id_usuario);
-      $objUser->id_usuario = (int)$objUser->id_usuario;
-      unset($objUser->ds_senha);
-      
-      // retonar objeto
-      return [
-        'id_categoria'  => (int)$objCategory->id_categoria,
-        'usuario'       => $objUser,
-        'ds_categoria'  => $objCategory->ds_categoria,
-        'img_categoria' => $objCategory->img_categoria
-      ];
-    }
-
-    // método responsável por retornar um objeto situação
-    private static function getSituation($id_situacao){
-      $objSituation = EntitySituation::getSituationById($id_situacao);
-      $objSituation->id_situacao = (int)$objSituation->id_situacao;
-
-      return $objSituation;
-    }
-
     // método responsável por retornar um objeto da entidade atividade
     public static function loadActivity($objParamActivity){
 
       // obter objeto de categoria
-      $objCategory = self::getCategory($objParamActivity->id_categoria);
+      $objCategory = EntityCategory::getCategoryById($objParamActivity->id_categoria);
+      $objCategory->id_categoria = (int)$objCategory->id_categoria;
 
       // obter objeto de situação
-      $objSituation = self::getSituation($objParamActivity->id_situacao);
+      $objSituation = EntitySituation::getSituationById($objParamActivity->id_situacao);
+      $objSituation->id_situacao = (int)$objSituation->id_situacao;
 
       // retornar objeto
       return [
@@ -86,6 +63,15 @@
         'img_atividade' => $objParamActivity->img_atividade,
         'ds_atividade'  => $objParamActivity->ds_atividade
       ];
+    }
+
+    // método responsável por retornar um objeto da entidade atividade
+    public static function loadUser($objParamUser){
+      $objUser = EntityUser::getUserById($objParamUser->id_usuario);
+      $objUser->id_usuario = (int)$objUser->id_usuario;
+      unset($objUser->ds_senha);
+      
+      return $objUser;
     }
   }
 ?>

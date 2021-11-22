@@ -49,7 +49,7 @@
     }
 
     // método responsável por obter os usuários do banco 
-    public static function getUser($where = null, $order = null, $limit = null, $fields = '*'){
+    public static function getUsers($where = null, $order = null, $limit = null, $fields = '*'){
       return (new Database('tb_usuario'))->select($where, $order, $limit, $fields);
     }
 

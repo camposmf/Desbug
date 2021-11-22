@@ -1,6 +1,7 @@
 <?php 
 
     namespace App\Controller\Api;
+    use \App\Model\Entity\User as EntityUser;
     use \App\Model\Entity\Activity as EntityActivity;
     use \App\Model\Entity\DataCollect as EntityDataCollect;
 
@@ -26,9 +27,14 @@
             $objActivityResult = EntityActivity::getActivityById($objDataCollect->id_atividade);
             $objActivity = EntityDataCollect::loadActivity($objActivityResult);
 
+            // recuperar objeto usuário
+            $objUserResult = EntityUser::getUserById($objDataCollect->id_usuario);
+            $objUser = EntityDataCollect::loadUser($objUserResult);
+
             // retornar valor para api
             return [
                 'id_coleta_dado'     => (int)$objDataCollect->id_coleta_dado,
+                'usuario'            => $objUser,        
                 'atividade'          => $objActivity,
                 'vl_sentimento_ant'  => $objDataCollect->vl_sentimento_ant,
                 'vl_sentimento_prox' => $objDataCollect->vl_sentimento_prox
@@ -85,6 +91,7 @@
 
             // carregar dados
             $objDataCollect = new EntityDataCollect();
+            $objDataCollect->id_usuario         = $postVars['id_usuario'];
             $objDataCollect->id_atividade       = $postVars['id_atividade'];
             $objDataCollect->vl_sentimento_ant  = $postVars['vl_sentimento_ant'];
             $objDataCollect->vl_sentimento_prox = $postVars['vl_sentimento_prox'];
@@ -92,13 +99,18 @@
             // inserir registro no banco de dados
             $objDataCollect->insertNewDataCollect();
 
-            // recupeara objeto atividade
+            // recupearar objeto atividade
             $objActivityResult = EntityActivity::getActivityById($objDataCollect->id_atividade);
             $objActivity = EntityDataCollect::loadActivity($objActivityResult);
+
+            // recuperar objeto usuário
+            $objUserResult = EntityUser::getUserById($objDataCollect->id_usuario);
+            $objUser = EntityDataCollect::loadUser($objUserResult);
 
             // retornar valor para api
             return [
                 'id_coleta_dado'     => (int)$objDataCollect->id_coleta_dado,
+                'usuario'            => $objUser,        
                 'atividade'          => $objActivity,
                 'vl_sentimento_ant'  => $objDataCollect->vl_sentimento_ant,
                 'vl_sentimento_prox' => $objDataCollect->vl_sentimento_prox
@@ -142,9 +154,14 @@
             $objActivityResult = EntityActivity::getActivityById($objDataCollect->id_atividade);
             $objActivity = EntityDataCollect::loadActivity($objActivityResult);
 
+            // recuperar objeto usuário
+            $objUserResult = EntityUser::getUserById($objDataCollect->id_usuario);
+            $objUser = EntityDataCollect::loadUser($objUserResult);
+  
             // retornar valor para api
             return [
                 'id_coleta_dado'     => (int)$objDataCollect->id_coleta_dado,
+                'usuario'            => $objUser,        
                 'atividade'          => $objActivity,
                 'vl_sentimento_ant'  => $objDataCollect->vl_sentimento_ant,
                 'vl_sentimento_prox' => $objDataCollect->vl_sentimento_prox

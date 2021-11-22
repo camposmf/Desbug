@@ -212,12 +212,6 @@
                 throw new \Exception("Situação '".$postVars['id_situacao']."' não foi encontrada.", 404);
             }
 
-            // valida a duplicação da descrição
-            $objActivityDescription = EntityActivity::getActivityByDescription($postVars['ds_atividade']);
-            if($objActivityDescription instanceof EntityActivity){
-                throw new \Exception("A descrição da atividade '".$postVars['ds_atividade']."' já existe no banco de dados.", 400);
-            }
-
             // carregar os dados na user model
             $objActivity->id_categoria  =  $postVars['id_categoria'];
             $objActivity->id_situacao   =  $postVars['id_situacao'];
