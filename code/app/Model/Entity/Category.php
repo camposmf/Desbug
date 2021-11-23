@@ -24,15 +24,10 @@
 
     // método responsável por atualizar categorias no banco de dados
     public function updateCategory(){
-
-      // atualiza os dados no banco de dados
       return (new Database('tb_categoria'))->update('id_categoria = '.$this->id_categoria, [
         'ds_categoria'  => $this->ds_categoria,
         'img_categoria' => $this->img_categoria
       ]);
-
-      // sucesso
-      return true;
     }
 
     // método responsável por deletar uma categoria no banco de dados

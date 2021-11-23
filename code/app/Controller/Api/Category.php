@@ -4,6 +4,7 @@
     use \App\Db\Pagination;
     use \App\Model\Entity\User as EntityUser;
     use \App\Model\Entity\Category as EntityCategory;
+    use \App\Model\Entity\ChooseCategory as EntityChooseCategory;
 
     class Category extends Api {
 
@@ -109,6 +110,14 @@
             // cadastrar dados no banco de dados
             $objCategory->insertNewCategory();
 
+            // carregar dados para entidade ChooseCategory
+            $objChooseCategory = new EntityChooseCategory();
+            $objChooseCategory->id_usuario = $request->user->id_usuario;
+            $objChooseCategory->id_categoria = $objCategory->id_categoria;
+
+            // cadastrar valores no banco de dados da entidade ChooseCategory
+            $objChooseCategory->insertNewChooseCategory();
+
             // retornar categoria
             return [
                 'id_categoria'    =>  (int)$objCategory->id_categoria,
@@ -139,17 +148,24 @@
 
             // validar a duplicação de descrição da categoria
             $objCategoryDescription = EntityCategory::getCategoryByDescription($postVars['ds_categoria']);
-            if($objCategoryDescription instanceof EntityCategory && $objCategoryDescription->id_usuario == $objUser->id_usuario){
+            if($objCategoryDescription instanceof EntityCategory){
                 throw new \Exception("Categoria '".$postVars['ds_categoria']."' já foi cadastrada.", 400);
             }
 
             // carregar os dados
-            $objCategory->id_usuario    =  $postVars['id_usuario'];
             $objCategory->ds_categoria  =  $postVars['ds_categoria'];
             $objCategory->img_categoria =  $postVars['img_categoria'];
-            
+
             // atualizar dados no banco de dados
             $objCategory->updateCategory();
+
+            // carregar dados para entidade ChooseCategory
+            $objChooseCategory = EntityChooseCategory::getChooseCategoryById($objCategory->id_categoria);
+            $objChooseCategory->id_categoria = $objCategory->id_categoria;
+            $objChooseCategory->id_usuario   = $request->user->id_usuario;
+
+            // atualizar dados no banco de dados
+            $objChooseCategory->updateChooseCategory();
 
             // retornar categoria
             return [
@@ -175,8 +191,17 @@
                 throw new \Exception("Categória '".$id."' não encontrado", 404);
             }
 
+            // buscar escolha da categoria
+            $objChooseCategory = EntityChooseCategory::getChooseCategoryById($objCategory->id_categoria);
+
+            // validar escolha da categoria
+            if(!$objChooseCategory instanceof EntityChooseCategory){
+                throw new \Exception("Escolhada da categória '".$id."' não encontrada", 404);
+            }
+
             // deleta dados no banco de dados
             $objCategory->deleteCategory();
+            $objChooseCategory->deleteChooseCategory();
 
             // retornar o sucesso da exclusão
             return [
