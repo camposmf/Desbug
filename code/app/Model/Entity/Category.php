@@ -6,7 +6,6 @@
 
   Class Category {
     public $id_categoria;
-    public $id_usuario;
     public $ds_categoria;
     public $img_categoria;
 
@@ -15,7 +14,6 @@
 
       // insere categoria no banco de dados
       $this->id_categoria = (new Database('tb_categoria'))->insert([
-        'id_usuario'    => $this->id_usuario,
         'ds_categoria'  => $this->ds_categoria,
         'img_categoria' => $this->img_categoria
       ]);
@@ -26,16 +24,10 @@
 
     // método responsável por atualizar categorias no banco de dados
     public function updateCategory(){
-
-      // atualiza os dados no banco de dados
       return (new Database('tb_categoria'))->update('id_categoria = '.$this->id_categoria, [
-        'id_usuario'    => $this->id_usuario,
         'ds_categoria'  => $this->ds_categoria,
         'img_categoria' => $this->img_categoria
       ]);
-
-      // sucesso
-      return true;
     }
 
     // método responsável por deletar uma categoria no banco de dados
@@ -63,14 +55,12 @@
       return (new Database('tb_categoria'))->select('ds_categoria = "'.$categoria.'"')->fetchObject(self::class);
     }
 
-    // método responsável por carregador os dados da view
-    public static function loadUser($objCategoryUser){
-
-      $objUser = EntityUser::getUserById($objCategoryUser->id_usuario);
-      $objUser->id_usuario    =  (int)$objUser->id_usuario;
-      unset($objUser->ds_senha);
-
-      return $objUser;
+    // método responsável por retornar um objeto da entidade categoria
+    public static function loadCategory($categoryId){
+      $objCategory = self::getCategoryById($categoryId);
+      $objCategory->id_categoria  = (int)$objCategory->id_categoria;
+      
+      return $objCategory;
     }
   }
 ?>

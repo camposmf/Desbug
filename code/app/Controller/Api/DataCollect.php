@@ -1,6 +1,7 @@
 <?php 
 
     namespace App\Controller\Api;
+    use \App\Model\Entity\User as EntityUser;
     use \App\Model\Entity\Activity as EntityActivity;
     use \App\Model\Entity\DataCollect as EntityDataCollect;
 
@@ -22,16 +23,23 @@
                 throw new \Exception("Código '".$id."' não foi encontrada.", 404);
             }
 
+            // buscar quantidade de sentimento
+            $qtdDataCollect = EntityDataCollect::getDataCollectByViewId($objDataCollect->id_usuario);
+
             // recupeara objeto atividade
-            $objActivityResult = EntityActivity::getActivityById($objDataCollect->id_atividade);
-            $objActivity = EntityDataCollect::loadActivity($objActivityResult);
+            $objActivity = EntityActivity::loadActivity($objDataCollect->id_atividade);
+
+            // recuperar objeto usuário
+            $objUser = EntityUser::loadUser($objDataCollect->id_usuario);
 
             // retornar valor para api
             return [
-                'id_coleta_dado'     => (int)$objDataCollect->id_coleta_dado,
-                'atividade'          => $objActivity,
-                'vl_sentimento_ant'  => $objDataCollect->vl_sentimento_ant,
-                'vl_sentimento_prox' => $objDataCollect->vl_sentimento_prox
+                'id_coleta_dado'         => (int)$objDataCollect->id_coleta_dado,
+                'vl_sentimento_ant'      => $objDataCollect->vl_sentimento_ant,
+                'vl_sentimento_prox'     => $objDataCollect->vl_sentimento_prox,
+                'vl_contagem_sentimento' => $qtdDataCollect, 
+                'usuario'                => $objUser,        
+                'atividade'              => $objActivity,
             ];
         }
 
@@ -83,8 +91,17 @@
                 throw new \Exception("Atividade '".$postVars['id_atividade']."' não foi encontrada.", 404);
             }
 
+            // buscar usuario
+            $objUser = EntityUser::getUserById($postVars['id_usuario']);
+
+            // validar se usuário existe
+            if(!$objUser instanceof EntityUser){
+                throw new \Exception("Usuário '".$postVars['id_usuario']."' não foi encontrada.", 404);
+            }
+
             // carregar dados
             $objDataCollect = new EntityDataCollect();
+            $objDataCollect->id_usuario         = $postVars['id_usuario'];
             $objDataCollect->id_atividade       = $postVars['id_atividade'];
             $objDataCollect->vl_sentimento_ant  = $postVars['vl_sentimento_ant'];
             $objDataCollect->vl_sentimento_prox = $postVars['vl_sentimento_prox'];
@@ -93,15 +110,18 @@
             $objDataCollect->insertNewDataCollect();
 
             // recupeara objeto atividade
-            $objActivityResult = EntityActivity::getActivityById($objDataCollect->id_atividade);
-            $objActivity = EntityDataCollect::loadActivity($objActivityResult);
+            $objActivity = EntityActivity::loadActivity($objDataCollect->id_atividade);
+
+            // recuperar objeto usuário
+            $objUser = EntityUser::loadUser($objDataCollect->id_usuario);
 
             // retornar valor para api
             return [
                 'id_coleta_dado'     => (int)$objDataCollect->id_coleta_dado,
-                'atividade'          => $objActivity,
                 'vl_sentimento_ant'  => $objDataCollect->vl_sentimento_ant,
-                'vl_sentimento_prox' => $objDataCollect->vl_sentimento_prox
+                'vl_sentimento_prox' => $objDataCollect->vl_sentimento_prox,
+                'usuario'            => $objUser,        
+                'atividade'          => $objActivity,
             ];
         }
 
@@ -130,6 +150,14 @@
                 throw new \Exception("Atividade '".$postVars['id_atividade']."' não foi encontrada.", 404);
             }
 
+            // buscar usuario
+            $objUser = EntityUser::getUserById($postVars['id_usuario']);
+
+            // validar se usuário existe
+            if(!$objUser instanceof EntityUser){
+                throw new \Exception("Usuário '".$postVars['id_usuario']."' não foi encontrada.", 404);
+            }
+
             // carregar dados
             $objDataCollect->id_atividade       = $postVars['id_atividade'];
             $objDataCollect->vl_sentimento_ant  = $postVars['vl_sentimento_ant'];
@@ -139,15 +167,18 @@
             $objDataCollect->updateDataCollect();
 
             // recupeara objeto atividade
-            $objActivityResult = EntityActivity::getActivityById($objDataCollect->id_atividade);
-            $objActivity = EntityDataCollect::loadActivity($objActivityResult);
+            $objActivity = EntityActivity::loadActivity($objDataCollect->id_atividade);
+
+            // recuperar objeto usuário
+            $objUser = EntityUser::loadUser($objDataCollect->id_usuario);
 
             // retornar valor para api
             return [
                 'id_coleta_dado'     => (int)$objDataCollect->id_coleta_dado,
-                'atividade'          => $objActivity,
                 'vl_sentimento_ant'  => $objDataCollect->vl_sentimento_ant,
-                'vl_sentimento_prox' => $objDataCollect->vl_sentimento_prox
+                'vl_sentimento_prox' => $objDataCollect->vl_sentimento_prox,
+                'usuario'            => $objUser,        
+                'atividade'          => $objActivity,
             ];
         }
     }

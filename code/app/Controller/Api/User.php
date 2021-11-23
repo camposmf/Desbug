@@ -12,7 +12,7 @@
             $itens = [];
 
             // quantidade total de registros
-            $quantidadeTotal = EntityUser::getUser(null, null, null, 'COUNT(*) as qtd')->fetchObject()->qtd;
+            $quantidadeTotal = EntityUser::getUsers(null, null, null, 'COUNT(*) as qtd')->fetchObject()->qtd;
 
             // página atual
             $queryParams = $request->getQueryParams();
@@ -22,7 +22,7 @@
             $objPagination = new Pagination($quantidadeTotal, $paginaAtual, 5);
 
             // resultados da página
-            $results = EntityUser::getUser(null, 'id_usuario ASC', $objPagination->getLimit());
+            $results = EntityUser::getUsers(null, 'id_usuario ASC', $objPagination->getLimit());
 
             // retornar valores
             while($objUser = $results->fetchObject(EntityUser::class)){
@@ -138,7 +138,6 @@
                 'nm_nickname'   =>  $objUser->nm_nickname,
                 'nm_usuario'    =>  $objUser->nm_usuario,
                 'ds_email'      =>  $objUser->ds_email,
-                'ds_senha'      =>  $objUser->ds_senha,
                 'dt_nascimento' =>  $objUser->dt_nascimento,
                 'img_usuario'   =>  $objUser->img_usuario
             ];
@@ -189,7 +188,6 @@
                 'nm_nickname'   =>  $objUser->nm_nickname,
                 'nm_usuario'    =>  $objUser->nm_usuario,
                 'ds_email'      =>  $objUser->ds_email,
-                'ds_senha'      =>  $objUser->ds_senha,
                 'dt_nascimento' =>  $objUser->dt_nascimento,
                 'img_usuario'   =>  $objUser->img_usuario
             ];

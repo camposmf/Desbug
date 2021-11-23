@@ -49,7 +49,7 @@
     }
 
     // método responsável por obter os usuários do banco 
-    public static function getUser($where = null, $order = null, $limit = null, $fields = '*'){
+    public static function getUsers($where = null, $order = null, $limit = null, $fields = '*'){
       return (new Database('tb_usuario'))->select($where, $order, $limit, $fields);
     }
 
@@ -61,6 +61,20 @@
     // método responsável por obter os usuários filtrados por id
     public static function getUserById($id){
       return (new Database('tb_usuario'))->select('id_usuario = "'.$id.'"')->fetchObject(self::class);
+    }
+
+    // método responsável por carrega os dados do usuário
+    public static function loadUser($userId){
+
+      // buscar usuário
+      $objUser = self::getUserById($userId);
+
+      // configurar saída dos dados
+      $objUser->id_usuario = (int)$objUser->id_usuario;
+      unset($objUser->ds_senha);
+      
+      // retornar obj usuário
+      return $objUser;
     }
   }
 ?>

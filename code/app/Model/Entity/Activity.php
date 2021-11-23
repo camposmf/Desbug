@@ -3,9 +3,9 @@
   namespace App\Model\Entity;
 
   use \App\Db\Database;
-  use \App\Model\Entity\Category;
-  use \App\Model\Entity\Situation;
   use \App\Model\Entity\User as EntityUser;
+  use \App\Model\Entity\Category as EntityCategory;
+  use \App\Model\Entity\Situation as EntitySituation;
 
   Class Activity {
 
@@ -61,28 +61,26 @@
       return (new Database('tb_atividade'))->select('ds_atividade = "'.$description.'"')->fetchObject(self::class);
     }
 
-    // método responsável por retornar um objeto da entidade categoria
-    public static function loadCategory($objParamCategory){
+    // método responsável por retornar um objeto da entidade atividade
+    public static function loadActivity($activityId){
 
-      // buscar objeto usuário
-      $objUser = EntityUser::getUserById($objParamCategory->id_usuario);
-      $objUser->id_usuario = (int)$objUser->id_usuario;
-      
+      // obter objeto de atividade
+      $objAtividade = self::getActivityById($activityId);
+
+      // obter objeto de categoria
+      $objCategory = EntityCategory::loadCategory($objAtividade->id_atividade);
+
+      // obter objeto de situação
+      $objSituation = EntitySituation::loadSituation($objAtividade->id_situacao);
+
+      // retornar objeto
       return [
-        'id_categoria'  => (int)$objParamCategory->id_categoria,
-        'usuario'       => $objUser,
-        'img_categoria' => $objParamCategory->img_categoria,
-        'ds_categoria'  => $objParamCategory->ds_categoria,
+        'id_atividade'  => (int)$objAtividade->id_atividade,
+        'categoria'     => $objCategory,
+        'situacao'      => $objSituation,
+        'img_atividade' => $objAtividade->img_atividade,
+        'ds_atividade'  => $objAtividade->ds_atividade
       ];
-    }
-
-    // método responsável por retornar um objeto da entidade situação
-    public static function loadSituation($objParamSituation){
-      $objSituation = new Situation();
-      $objSituation->id_situacao  = (int)$objParamSituation->id_situacao;
-      $objSituation->tp_situacao  = $objParamSituation->tp_situacao;
-
-      return $objSituation;
     }
   }
 ?>

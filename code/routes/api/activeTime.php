@@ -13,6 +13,17 @@
         }
     ]);
 
+    // rota de filtro de tempo de acesso por dia
+    $objRouter->get('/api/active-by-day/{id}', [
+        'middlewares' => [
+            'api',
+            'user-basic-auth'
+        ],
+        function($request, $id){
+            return new Response(200, Api\ActiveTime::getTimeByDay($request, $id), 'application/json');
+        }
+    ]);
+
     // rota para cadastrar tempo de acesso
     $objRouter->post('/api/active-time', [
         'middlewares' => [
