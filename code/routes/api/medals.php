@@ -13,7 +13,7 @@
         }
     ]);
 
-    // rota de listagem de medalha
+    // rota de filtrar medalha
     $objRouter->get('/api/medals/{id}', [
         'middlewares' => [
             'api',
@@ -30,8 +30,30 @@
             'api',
             'user-basic-auth'
         ],
-        function($request, $id){
+        function($request){
             return new Response(201, Api\Medal::setAddMedal($request), 'application/json');
+        }
+    ]);
+
+    // rota de alteração de medalha
+    $objRouter->put('/api/medals/{id}', [
+        'middlewares' => [
+            'api',
+            'user-basic-auth'
+        ],
+        function($request, $id){
+            return new Response(200, Api\Medal::setEditMedal($request, $id), 'application/json');
+        }
+    ]);
+
+    // rota de remoção de medalho
+    $objRouter->delete('/api/medals/{id}', [
+        'middlewares' => [
+            'api',
+            'user-basic-auth'
+        ],
+        function($request, $id){
+            return new Response(200, Api\Medal::setDeleteMedal($request, $id), 'application/json');
         }
     ]);
 ?>
