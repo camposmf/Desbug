@@ -23,15 +23,14 @@
                 throw new \Exception("Nível de acesso '".$id."' não foi encontrada.", 404);
             }
 
-            // recuperar usuário da view
-            $selectUserResult = EntityUser::getUserById($objAccessLevel->id_usuario);
-            $objUser = EntityAccessLevel::loadAccessLevelsUserViewValues($selectUserResult);
+            // recuperar objeto do usuário
+            $objUser = EntityUser::loadUser($objAccessLevel->id_usuario);
 
             // retornar valor para api
             return [
                 'id_nivel_acesso' => (int)$objAccessLevel->id_nivel_acesso,
-                'usuario'         => $objUser,
-                'tp_nivel_acesso' => $objAccessLevel->tp_nivel_acesso
+                'tp_nivel_acesso' => $objAccessLevel->tp_nivel_acesso,
+                'usuario'         => $objUser
             ];
         }
 
@@ -92,14 +91,13 @@
             $objAccessLevel->insertNewAccessLevel();
 
             // recuperar objeto do usuário
-            $userResult = EntityUser::getUserById($objAccessLevel->id_usuario);
-            $objUser = EntityAccessLevel::loadAccessLevelsUserViewValues($userResult);
+            $objUser = EntityUser::loadUser($objAccessLevel->id_usuario);
 
             // retornar registro cadastrado
             return [
                 'id_nivel_acesso' => (int)$objAccessLevel->id_nivel_acesso,
-                'usuario'         => $objUser,
-                'tp_nivel_acesso' => $objAccessLevel->tp_nivel_acesso
+                'tp_nivel_acesso' => $objAccessLevel->tp_nivel_acesso,
+                'usuario'         => $objUser
             ];
         }
 
@@ -133,6 +131,11 @@
                 throw new \Exception("O usuário '".$postVars['id_usuario']."' não foi encontrada no banco de dados", 404);
             }
 
+            // validar usuário
+            if($objUser->id_usuario == $request->user->id_usuario){
+                throw new \Exception("Não é possível editar '".$objUser->id_usuario."' por falta de permissão", 400);
+            }
+
             // carregar dados
             $objAccessLevel->id_usuario      = $postVars['id_usuario'];
             $objAccessLevel->tp_nivel_acesso = $postVars['tp_nivel_acesso'];
@@ -140,15 +143,14 @@
             // inserir registro no banco de dados
             $objAccessLevel->updateAccessLevel();
 
-            // recuperar objeto usuário
-            $selectUserResult = EntityUser::getUserById($objAccessLevel->id_usuario);
-            $objUser = EntityAccessLevel::loadAccessLevelsUserViewValues($selectUserResult);
+            // recuperar objeto do usuário
+            $objUser = EntityUser::loadUser($objAccessLevel->id_usuario);
 
             // retornar registro atualizado
             return [
                 'id_nivel_acesso' => (int)$objAccessLevel->id_nivel_acesso,
-                'usuario'         => $objUser,
-                'tp_nivel_acesso' => $objAccessLevel->tp_nivel_acesso
+                'tp_nivel_acesso' => $objAccessLevel->tp_nivel_acesso,
+                'usuario'         => $objUser
             ];
         }
     }
