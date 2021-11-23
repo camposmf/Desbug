@@ -23,16 +23,15 @@
                 throw new \Exception("Registro com código de identificação '".$id."' não foi encontrado.", 404);
             }
 
-            // recuperar usuário da view
-            $userResult = EntityUser::getUserById($objActiveTime->id_usuario);
-            $objUser = EntityActiveTime::loadActiveTimeUserViewValues($userResult);
+            // recuperar objeto do usuário
+            $objUser = EntityUser::loadUser($objActiveTime->id_usuario);
 
-            // retornar valor para api
+            // retornar registro cadatrado
             return [
                 'id_nivel_acesso' => (int)$objActiveTime->id_tempo,
-                'usuario'         => $objUser,
                 'dt_entrada'      => $objActiveTime->dt_entrada,
-                'dt_saida'        => $objActiveTime->dt_saida
+                'dt_saida'        => $objActiveTime->dt_saida,
+                'usuario'         => $objUser
             ];
         }
 
@@ -97,15 +96,14 @@
             $objActiveTime->insertNewActiveTime();
 
             // recuperar objeto do usuário
-            $userResult = EntityUser::getUserById($objActiveTime->id_usuario);
-            $objUser = EntityActiveTime::loadActiveTimeUserViewValues($userResult);
+            $objUser = EntityUser::loadUser($objActiveTime->id_usuario);
 
             // retornar registro cadatrado
             return [
                 'id_nivel_acesso' => (int)$objActiveTime->id_tempo,
-                'usuario'         => $objUser,
                 'dt_entrada'      => $objActiveTime->dt_entrada,
-                'dt_saida'        => $objActiveTime->dt_saida
+                'dt_saida'        => $objActiveTime->dt_saida,
+                'usuario'         => $objUser
             ];
         }
 
@@ -134,6 +132,11 @@
                 throw new \Exception("O usuário '".$postVars['id_usuario']."' não foi encontrada no banco de dados", 404);
             }
 
+            // validar usuário
+            if($objUser->id_usuario == $request->user->id_usuario){
+                throw new \Exception("Não é possível editar '".$objUser->id_usuario."' por falta de permissão", 400);
+            }
+
             // carregar dados
             $objActiveTime->id_usuario  = $postVars['id_usuario'];
             $objActiveTime->dt_entrada  = $postVars['dt_entrada'];
@@ -143,17 +146,15 @@
             $objActiveTime->updateActiveTime();
 
             // recuperar objeto do usuário
-            $userResult = EntityUser::getUserById($objActiveTime->id_usuario);
-            $objUser = EntityActiveTime::loadActiveTimeUserViewValues($userResult);
+            $objUser = EntityUser::loadUser($objActiveTime->id_usuario);
 
-            // retornar registro cadatrado
+            // retornar registro cadastrado
             return [
                 'id_nivel_acesso' => (int)$objActiveTime->id_tempo,
-                'usuario'         => $objUser,
                 'dt_entrada'      => $objActiveTime->dt_entrada,
-                'dt_saida'        => $objActiveTime->dt_saida
+                'dt_saida'        => $objActiveTime->dt_saida,
+                'usuario'         => $objUser
             ];
         }
-
     }
 ?>
