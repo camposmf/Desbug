@@ -3,9 +3,9 @@
   namespace App\Model\Entity;
 
   use \App\Db\Database;
-  use \App\Model\Entity\Category;
-  use \App\Model\Entity\Situation;
   use \App\Model\Entity\User as EntityUser;
+  use \App\Model\Entity\Category as EntityCategory;
+  use \App\Model\Entity\Situation as EntitySituation;
 
   Class Activity {
 
@@ -59,6 +59,28 @@
     // método responsável por obter uma atividade filtrados pela descrição da atividade
     public static function getActivityByDescription($description){
       return (new Database('tb_atividade'))->select('ds_atividade = "'.$description.'"')->fetchObject(self::class);
+    }
+
+    // método responsável por retornar um objeto da entidade atividade
+    public static function loadActivity($activityId){
+
+      // obter objeto de atividade
+      $objAtividade = self::getActivityById($activityId);
+
+      // obter objeto de categoria
+      $objCategory = EntityCategory::loadCategory($objAtividade->id_atividade);
+
+      // obter objeto de situação
+      $objSituation = EntitySituation::loadSituation($objAtividade->id_situacao);
+
+      // retornar objeto
+      return [
+        'id_atividade'  => (int)$objAtividade->id_atividade,
+        'categoria'     => $objCategory,
+        'situacao'      => $objSituation,
+        'img_atividade' => $objAtividade->img_atividade,
+        'ds_atividade'  => $objAtividade->ds_atividade
+      ];
     }
   }
 ?>

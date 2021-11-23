@@ -43,26 +43,5 @@
     public static function getDataCollectById($id){
       return (new Database('tb_coleta_dado'))->select('id_coleta_dado = '.$id)->fetchObject(self::class);
     }
-
-    // método responsável por retornar um objeto da entidade atividade
-    public static function loadActivity($objParamActivity){
-
-      // obter objeto de categoria
-      $objCategory = EntityCategory::getCategoryById($objParamActivity->id_categoria);
-      $objCategory->id_categoria = (int)$objCategory->id_categoria;
-
-      // obter objeto de situação
-      $objSituation = EntitySituation::getSituationById($objParamActivity->id_situacao);
-      $objSituation->id_situacao = (int)$objSituation->id_situacao;
-
-      // retornar objeto
-      return [
-        'id_atividade'  => (int)$objParamActivity->id_atividade,
-        'categoria'     => $objCategory,
-        'situacao'      => $objSituation,
-        'img_atividade' => $objParamActivity->img_atividade,
-        'ds_atividade'  => $objParamActivity->ds_atividade
-      ];
-    }
   }
 ?>

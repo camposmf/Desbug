@@ -24,20 +24,18 @@
             }
 
             // recupeara objeto atividade
-            $objActivityResult = EntityActivity::getActivityById($objDataCollect->id_atividade);
-            $objActivity = EntityDataCollect::loadActivity($objActivityResult);
+            $objActivity = EntityActivity::loadActivity($objDataCollect->id_atividade);
 
             // recuperar objeto usuário
-            $objUserResult = EntityUser::getUserById($objDataCollect->id_usuario);
-            $objUser = EntityDataCollect::loadUser($objUserResult);
+            $objUser = EntityUser::loadUser($objDataCollect->id_usuario);
 
             // retornar valor para api
             return [
                 'id_coleta_dado'     => (int)$objDataCollect->id_coleta_dado,
+                'vl_sentimento_ant'  => $objDataCollect->vl_sentimento_ant,
+                'vl_sentimento_prox' => $objDataCollect->vl_sentimento_prox,
                 'usuario'            => $objUser,        
                 'atividade'          => $objActivity,
-                'vl_sentimento_ant'  => $objDataCollect->vl_sentimento_ant,
-                'vl_sentimento_prox' => $objDataCollect->vl_sentimento_prox
             ];
         }
 
@@ -89,6 +87,14 @@
                 throw new \Exception("Atividade '".$postVars['id_atividade']."' não foi encontrada.", 404);
             }
 
+            // buscar usuario
+            $objUser = EntityUser::getUserById($postVars['id_usuario']);
+
+            // validar se usuário existe
+            if(!$objUser instanceof EntityUser){
+                throw new \Exception("Usuário '".$postVars['id_usuario']."' não foi encontrada.", 404);
+            }
+
             // carregar dados
             $objDataCollect = new EntityDataCollect();
             $objDataCollect->id_usuario         = $postVars['id_usuario'];
@@ -99,21 +105,19 @@
             // inserir registro no banco de dados
             $objDataCollect->insertNewDataCollect();
 
-            // recupearar objeto atividade
-            $objActivityResult = EntityActivity::getActivityById($objDataCollect->id_atividade);
-            $objActivity = EntityDataCollect::loadActivity($objActivityResult);
+            // recupeara objeto atividade
+            $objActivity = EntityActivity::loadActivity($objDataCollect->id_atividade);
 
             // recuperar objeto usuário
-            $objUserResult = EntityUser::getUserById($objDataCollect->id_usuario);
-            $objUser = EntityDataCollect::loadUser($objUserResult);
+            $objUser = EntityUser::loadUser($objDataCollect->id_usuario);
 
             // retornar valor para api
             return [
                 'id_coleta_dado'     => (int)$objDataCollect->id_coleta_dado,
+                'vl_sentimento_ant'  => $objDataCollect->vl_sentimento_ant,
+                'vl_sentimento_prox' => $objDataCollect->vl_sentimento_prox,
                 'usuario'            => $objUser,        
                 'atividade'          => $objActivity,
-                'vl_sentimento_ant'  => $objDataCollect->vl_sentimento_ant,
-                'vl_sentimento_prox' => $objDataCollect->vl_sentimento_prox
             ];
         }
 
@@ -142,6 +146,14 @@
                 throw new \Exception("Atividade '".$postVars['id_atividade']."' não foi encontrada.", 404);
             }
 
+            // buscar usuario
+            $objUser = EntityUser::getUserById($postVars['id_usuario']);
+
+            // validar se usuário existe
+            if(!$objUser instanceof EntityUser){
+                throw new \Exception("Usuário '".$postVars['id_usuario']."' não foi encontrada.", 404);
+            }
+
             // carregar dados
             $objDataCollect->id_atividade       = $postVars['id_atividade'];
             $objDataCollect->vl_sentimento_ant  = $postVars['vl_sentimento_ant'];
@@ -151,20 +163,18 @@
             $objDataCollect->updateDataCollect();
 
             // recupeara objeto atividade
-            $objActivityResult = EntityActivity::getActivityById($objDataCollect->id_atividade);
-            $objActivity = EntityDataCollect::loadActivity($objActivityResult);
+            $objActivity = EntityActivity::loadActivity($objDataCollect->id_atividade);
 
             // recuperar objeto usuário
-            $objUserResult = EntityUser::getUserById($objDataCollect->id_usuario);
-            $objUser = EntityDataCollect::loadUser($objUserResult);
-  
+            $objUser = EntityUser::loadUser($objDataCollect->id_usuario);
+
             // retornar valor para api
             return [
                 'id_coleta_dado'     => (int)$objDataCollect->id_coleta_dado,
+                'vl_sentimento_ant'  => $objDataCollect->vl_sentimento_ant,
+                'vl_sentimento_prox' => $objDataCollect->vl_sentimento_prox,
                 'usuario'            => $objUser,        
                 'atividade'          => $objActivity,
-                'vl_sentimento_ant'  => $objDataCollect->vl_sentimento_ant,
-                'vl_sentimento_prox' => $objDataCollect->vl_sentimento_prox
             ];
         }
     }
