@@ -61,9 +61,9 @@
     }
 
     // método responsável por retornar um objeto da entidade categoria
-    public static function loadCategory($objParamCategory){
-      $objCategory = self::getCategoryById($objParamCategory->id_categoria);
-      $objCategory->id_categoria  = (int)$objParamCategory->id_categoria;
+    public static function loadCategory($categoryId){
+      $objCategory = self::getCategoryById($categoryId);
+      $objCategory->id_categoria  = (int)$objCategory->id_categoria;
       
       return $objCategory;
     }

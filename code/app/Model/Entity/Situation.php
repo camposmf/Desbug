@@ -38,9 +38,9 @@
     }
 
     // método responsável por retornar um objeto da entidade situação
-    public static function loadSituation($objParamSituation){
-      $objSituation = self::getSituationById($objParamSituation->id_situacao);
-      $objSituation->id_situacao  = (int)$objParamSituation->id_situacao;
+    public static function loadSituation($situationId){
+      $objSituation = self::getSituationById($situationId);
+      $objSituation->id_situacao  = (int)$objSituation->id_situacao;
 
       return $objSituation;
     }

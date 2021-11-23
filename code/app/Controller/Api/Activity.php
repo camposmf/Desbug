@@ -30,12 +30,10 @@
             while($objActivity = $results->fetchObject(EntityActivity::class)){
 
                 // recuperar categoria
-                $objCategoryResult = EntityCategory::getCategoryById($objActivity->id_categoria);
-                $objCategory = EntityActivity::loadCategory($objCategoryResult);
+                $objCategory = EntityCategory::loadCategory($objActivity->id_categoria);
 
                 // recuperar situacao
-                $objSituationResult = EntitySituation::getSituationById($objActivity->id_situacao);
-                $objSituation = EntityActivity::loadSituation($objSituationResult);
+                $objSituation = EntitySituation::loadSituation($objActivity->id_situacao);
 
                 $itens[] = [
                     'id_atividade'  =>  (int)$objActivity->id_atividade,
@@ -74,12 +72,10 @@
             }
 
             // recuperar categoria
-            $objCategoryResult = EntityCategory::getCategoryById($objActivity->id_categoria);
-            $objCategory = EntityActivity::loadCategory($objCategoryResult);
+            $objCategory = EntityCategory::loadCategory($objActivity->id_categoria);
 
             // recuperar situacao
-            $objSituationResult = EntitySituation::getSituationById($objActivity->id_situacao);
-            $objSituation = EntityActivity::loadSituation($objSituationResult);
+            $objSituation = EntitySituation::loadSituation($objActivity->id_situacao);
 
             // retornar atividade
             return [
@@ -165,10 +161,10 @@
             $objActivity->insertNewActivity();
 
             // recuperar categoria
-            $objCategory = EntityActivity::loadCategory($objCategoryResult);
+            $objCategory = EntityCategory::loadCategory($objActivity->id_categoria);
 
             // recuperar situacao
-            $objSituation = EntityActivity::loadSituation($objSituationResult);
+            $objSituation = EntitySituation::loadSituation($objActivity->id_situacao);
 
             // retornar atividade
             return [
@@ -222,10 +218,10 @@
             $objActivity->updateActivity();
 
             // recuperar categoria
-            $objCategory = EntityActivity::loadCategory($objCategoryResult);
+            $objCategory = EntityCategory::loadCategory($objActivity->id_categoria);
 
             // recuperar situacao
-            $objSituation = EntityActivity::loadSituation($objSituationResult);
+            $objSituation = EntitySituation::loadSituation($objActivity->id_situacao);
 
             // retornar atividade
             return [
