@@ -2,7 +2,8 @@
   namespace App\Model\Entity;
 
   use \PDO;
-  use App\Db\Database;
+  use \App\Db\Database;
+  use \App\Model\Entity\Points as EntityPoints;
 
   Class Medal {
     public $id_medalha;
@@ -53,18 +54,23 @@
     }
 
     // método responsável por carregar os dados da medalha
-    public static function loadMedal($id){
+    public static function loadMedal($objViewPoints){
 
-      // recuperar medalhas
-      $objViewPontuacao = (new Database('vw_pontuacao'))->select('id_usuario = "'.$id.'"')->fetchObject(self::class);
+      // itens
+      $itens = [];
       
+      // alimentar array de medalhas
+      while($medals = $objViewPoints->fetchObject(self::class)){
+        $itens[] = [
+          'id_medalha'        => (int)$medals->id_medalha,
+          'ds_medalha'        => $medals->ds_medalha,
+          'img_medalha'       => $medals->img_medalha,
+          'vl_medalha_total'  => (float)$medals->vl_medalha_total  
+        ];
+      }
+
       // retornar medalhas
-      return [
-        'id_medalha'        => (int)$objViewPontuacao->id_medalha,
-        'ds_medalha'        => $objViewPontuacao->ds_medalha,
-        'img_medalha'       => $objViewPontuacao->img_medalha,
-        'vl_medalha_total'  => (float)$objViewPontuacao->vl_medalha_total
-      ];
+      return $itens;
     }
   }
 ?>

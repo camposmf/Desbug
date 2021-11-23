@@ -17,27 +17,26 @@
             }
 
             // buscar pontuação
-            $objPoint = EntityPoints::getPointsById($id);
+            $objPoint = EntityPoints::getPointByViewUserId($id);
 
             // validar se a medalha existe
             if(!$objPoint instanceof EntityPoints){
                 throw new \Exception("A pontuação '".$id."' não foi encontrada.", 404);
             }
-            
+
             // recuperar usuário da view
-            $selectUserResult = EntityUser::getUserById($objPoint->id_usuario);
-            $objUser = EntityPoints::loadPointsUserViewValues($selectUserResult);
+            $objUser = EntityUser::loadUser($objPoint->id_usuario);
 
             // recuperar medalhas da view
-            $selectMedalResult = EntityPoints::getItemsById($objPoint->id_usuario);
-            $objMedal = EntityPoints::loadPointsMedalViewValues($selectMedalResult);
+            $objPoints = EntityPoints::getPointsByViewTeste($id);
+            $objMedal = EntityMedal::loadMedal($objPoints);
 
             // retornar pontuação
             return [
                 'id_pontuacao'  => (int)$objPoint->id_pontuacao,
+                'vl_pontuacao'  => (float)$objPoint->vl_pontuacao,
                 'usuario'       => $objUser,
-                'medalha'       => $objMedal,
-                'vl_pontuacao'  => (float)$objPoint->vl_pontuacao
+                'medalha'       => $objMedal
             ];
         }
 
@@ -69,6 +68,11 @@
                 throw new \Exception("Valor da pontuação é um campo obrigatório", 400);
             }
 
+            // validar se valor da medalha é númerico
+            if(!is_numeric($postVars['vl_pontuacao'])){
+                throw new \Exception("Valor da pontuação é um campo númerico", 400);
+            }
+
             return $postVars;
         }
 
@@ -86,7 +90,7 @@
             if(!$objMedal instanceof EntityMedal){
                 throw new \Exception("A medalha '".$postVars['id_medalha']."' não foi encontrada no banco de dados", 404);
             }
-
+            
             // validar se usuário existe
             $objUser = EntityUser::getUserById($postVars['id_usuario']);
             if(!$objUser instanceof EntityUser){
@@ -100,22 +104,20 @@
             $objPoint->vl_pontuacao  =   $postVars['vl_pontuacao'];
 
             // chamar método de inserção no banco de dados
-            $objPoint->insertNewPoints();
+            $objPoint->insertNewPoint();
 
             // recuperar usuário da view
-            $selectUserResult = EntityUser::getUserById($objPoint->id_usuario);
-            $objUser = EntityPoints::loadPointsUserViewValues($selectUserResult);
+            $objUser = EntityUser::loadUser($objPoint->id_usuario);
 
             // recuperar medalhas da view
-            $selectMedalResult = EntityPoints::getItemsById($objPoint->id_usuario);
-            $objMedal = EntityPoints::loadPointsMedalViewValues($selectMedalResult);
+            $objMedal = EntityMedal::loadMedal($objPoint->id_usuario);
 
             // retornar pontuação
             return [
                 'id_pontuacao'  => (int)$objPoint->id_pontuacao,
+                'vl_pontuacao'  => (float)$objPoint->vl_pontuacao,
                 'usuario'       => $objUser,
-                'medalha'       => $objMedal,
-                'vl_pontuacao'  => (float)$objPoint->vl_pontuacao
+                'medalha'       => $objMedal
             ];
         }
 
@@ -160,19 +162,17 @@
             $objPoint->updatePoints();
 
             // recuperar usuário da view
-            $selectUserResult = EntityUser::getUserById($objPoint->id_usuario);
-            $objUser = EntityPoints::loadPointsUserViewValues($selectUserResult);
+            $objUser = EntityPoints::loadUser($objPoint->id_usuario);
 
             // recuperar medalhas da view
-            $selectMedalResult = EntityPoints::getItemsById($objPoint->id_usuario);
-            $objMedal = EntityPoints::loadPointsMedalViewValues($selectMedalResult);
+            $objMedal = EntityPoints::loadMedal($objPoint->id_usuario);
 
             // retornar pontuação
             return [
                 'id_pontuacao'  => (int)$objPoint->id_pontuacao,
+                'vl_pontuacao'  => (float)$objPoint->vl_pontuacao,
                 'usuario'       => $objUser,
-                'medalha'       => $objMedal,
-                'vl_pontuacao'  => (float)$objPoint->vl_pontuacao
+                'medalha'       => $objMedal
             ];
         }
     }

@@ -12,7 +12,7 @@
     public $vl_pontuacao;
 
     // método responsável por inserir registros no banco de dados
-    public function insertNewPoints(){
+    public function insertNewPoint(){
 
       // insere tempo de atividade no banco de dados
       $this->id_pontuacao = (new Database('tb_pontuacao'))->insert([
@@ -27,7 +27,7 @@
     }
 
     // método responsável por atualizar registros no banco de dados
-    public function updatePoints(){
+    public function updatePoint(){
       return (new Database('tb_pontuacao'))->update('id_pontuacao = '.$this->id_pontuacao, [
         'id_usuario'    => $this->id_usuario,
         'id_medalha'    => $this->id_medalha,
@@ -35,14 +35,20 @@
       ]);
     }
 
-    // método responsável por listar os dados da view de categoria
-    public static function getPointsByView($where = null, $order = null, $limit = null, $fields = '*'){
-      return (new Database('tb_pontuacao'))->select($where, $order, $limit, $fields);
+    // método responsável por obter pontos filtrados pelo id do usuário
+    public static function getPointsByViewTeste($id = null, $order = null, $limit = null, $fields = '*'){
+      return (new Database('vw_pontuacao'))->select('id_usuario = "'.$id.'"', $order, $limit, $fields);
+    }
+
+    public static function getPointByViewUserId($id){
+      return (new Database('vw_pontuacao'))->select('id_usuario = "'.$id.'"')->fetchObject(self::class);
     }
 
     // método responsável por obter pontos filtrados por id
-    public static function getPointsById($id){
-      return (new Database('tb_pontuacao'))->select('id_pontuacao = "'.$id.'"')->fetchObject(self::class);
+    public static function getPointByViewId($id){
+      return (new Database('vw_pontuacao'))->select('id_pontuacao = "'.$id.'"')->fetchObject(self::class);
     }
+
+    
   }
 ?>
