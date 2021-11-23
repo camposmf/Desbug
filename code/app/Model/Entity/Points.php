@@ -36,7 +36,7 @@
     }
 
     // método responsável por obter pontos filtrados pelo id do usuário
-    public static function getPointsByViewTeste($id = null, $order = null, $limit = null, $fields = '*'){
+    public static function getPointsByViewId($id = null, $order = null, $limit = null, $fields = '*'){
       return (new Database('vw_pontuacao'))->select('id_usuario = "'.$id.'"', $order, $limit, $fields);
     }
 
@@ -45,7 +45,7 @@
     }
 
     // método responsável por obter pontos filtrados por id
-    public static function getPointByViewId($id){
+    public static function getPointById($id){
       return (new Database('vw_pontuacao'))->select('id_pontuacao = "'.$id.'"')->fetchObject(self::class);
     }
 

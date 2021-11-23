@@ -28,7 +28,7 @@
             $objUser = EntityUser::loadUser($objPoint->id_usuario);
 
             // recuperar medalhas da view
-            $objPoints = EntityPoints::getPointsByViewTeste($id);
+            $objPoints = EntityPoints::getPointsByViewId($id);
             $objMedal = EntityMedal::loadMedal($objPoints);
 
             // retornar pontuação
@@ -110,7 +110,8 @@
             $objUser = EntityUser::loadUser($objPoint->id_usuario);
 
             // recuperar medalhas da view
-            $objMedal = EntityMedal::loadMedal($objPoint->id_usuario);
+            $objPoints = EntityPoints::getPointsByViewId($objPoint->id_usuario);
+            $objMedal = EntityMedal::loadMedal($objPoints);
 
             // retornar pontuação
             return [
@@ -136,7 +137,7 @@
             self::handleRequiredFields($postVars);
 
             // validar se pontuação existe
-            $objPoint = EntityPoints::getPointsById($id);
+            $objPoint = EntityPoints::getPointById($id);
             if(!$objPoint instanceof EntityPoints){
                 throw new \Exception("Pontuação '".$id."' não encontrada", 404);
             }
@@ -159,13 +160,14 @@
             $objPoint->vl_pontuacao  =   $postVars['vl_pontuacao'];
 
             // chamar método de inserção no banco de dados
-            $objPoint->updatePoints();
+            $objPoint->updatePoint();
 
             // recuperar usuário da view
-            $objUser = EntityPoints::loadUser($objPoint->id_usuario);
+            $objUser = EntityUser::loadUser($objPoint->id_usuario);
 
             // recuperar medalhas da view
-            $objMedal = EntityPoints::loadMedal($objPoint->id_usuario);
+            $objPoints = EntityPoints::getPointsByViewId($id);
+            $objMedal = EntityMedal::loadMedal($objPoints);
 
             // retornar pontuação
             return [
