@@ -15,7 +15,7 @@
   include __DIR__ . '/api/categories.php';
 
   // incluí rota de Escolha de Categorias
-  include __DIR__ . '/api/chooseCategories.php';
+  include __DIR__ . '/api/chooseCategory.php';
 
   // incluí rota de Nível de Acesso
   include __DIR__ . '/api/accessLevel.php';
