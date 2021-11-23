@@ -64,14 +64,5 @@
         'ds_atividade'  => $objParamActivity->ds_atividade
       ];
     }
-
-    // método responsável por retornar um objeto da entidade atividade
-    public static function loadUser($objParamUser){
-      $objUser = EntityUser::getUserById($objParamUser->id_usuario);
-      $objUser->id_usuario = (int)$objUser->id_usuario;
-      unset($objUser->ds_senha);
-      
-      return $objUser;
-    }
   }
 ?>

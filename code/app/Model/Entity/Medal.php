@@ -51,5 +51,20 @@
     public static function getMedalByName($name){
       return(new Database('tb_medalha'))->select('ds_medalha = "'.$name.'"')->fetchObject(self::class);
     }
+
+    // método responsável por carregar os dados da medalha
+    public static function loadMedal($id){
+
+      // recuperar medalhas
+      $objViewPontuacao = (new Database('vw_pontuacao'))->select('id_usuario = "'.$id.'"')->fetchObject(self::class);
+      
+      // retornar medalhas
+      return [
+        'id_medalha'        => (int)$objViewPontuacao->id_medalha,
+        'ds_medalha'        => $objViewPontuacao->ds_medalha,
+        'img_medalha'       => $objViewPontuacao->img_medalha,
+        'vl_medalha_total'  => (float)$objViewPontuacao->vl_medalha_total
+      ];
+    }
   }
 ?>

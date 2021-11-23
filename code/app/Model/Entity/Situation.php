@@ -36,6 +36,14 @@
     public static function getSituationByType($typeSituation){
       return (new Database('tb_situacao'))->select('tp_situacao = "'.$typeSituation.'"')->fetchObject(self::class);
     }
+
+    // método responsável por retornar um objeto da entidade situação
+    public static function loadSituation($objParamSituation){
+      $objSituation = self::getSituationById($objParamSituation->id_situacao);
+      $objSituation->id_situacao  = (int)$objParamSituation->id_situacao;
+
+      return $objSituation;
+    }
     
   }
 ?>

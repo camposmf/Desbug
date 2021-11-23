@@ -60,24 +60,5 @@
     public static function getActivityByDescription($description){
       return (new Database('tb_atividade'))->select('ds_atividade = "'.$description.'"')->fetchObject(self::class);
     }
-
-    // método responsável por retornar um objeto da entidade categoria
-    public static function loadCategory($objParamCategory){
-      $objCategory = new Category();
-      $objCategory->id_categoria  = (int)$objParamCategory->id_categoria;
-      $objCategory->ds_categoria  = $objParamCategory->ds_categoria;
-      $objCategory->img_categoria = $objParamCategory->img_categoria;
-
-      return $objCategory;
-    }
-
-    // método responsável por retornar um objeto da entidade situação
-    public static function loadSituation($objParamSituation){
-      $objSituation = new Situation();
-      $objSituation->id_situacao  = (int)$objParamSituation->id_situacao;
-      $objSituation->tp_situacao  = $objParamSituation->tp_situacao;
-
-      return $objSituation;
-    }
   }
 ?>

@@ -31,22 +31,5 @@
     public static function getAccessLevelById($id){
       return (new Database('tb_nivel_acesso'))->select("id_nivel_acesso = '".$id."'")->fetchObject(self::class);
     }
-
-    // método responsável por carrega os dados do usuário
-    public static function loadAccessLevelsUserViewValues($objParamUser){
-
-      // mapear os campos
-      $objUser = new User();
-      $objUser->id_usuario    = (int)$objParamUser->id_usuario;
-      $objUser->nm_nickname   = $objParamUser->nm_nickname;
-      $objUser->nm_usuario    = $objParamUser->nm_usuario;
-      $objUser->ds_email      = $objParamUser->ds_email;
-      $objUser->dt_nascimento = $objParamUser->dt_nascimento;
-      $objUser->img_usuario   = $objParamUser->img_usuario;
-      unset($objUser->ds_senha);
-
-      // retornar valor
-      return $objUser;
-    }
   }
 ?>

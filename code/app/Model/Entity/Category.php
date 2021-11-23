@@ -59,5 +59,13 @@
     public static function getCategoryByDescription($categoria){
       return (new Database('tb_categoria'))->select('ds_categoria = "'.$categoria.'"')->fetchObject(self::class);
     }
+
+    // método responsável por retornar um objeto da entidade categoria
+    public static function loadCategory($objParamCategory){
+      $objCategory = self::getCategoryById($objParamCategory->id_categoria);
+      $objCategory->id_categoria  = (int)$objParamCategory->id_categoria;
+      
+      return $objCategory;
+    }
   }
 ?>

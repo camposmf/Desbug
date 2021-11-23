@@ -37,22 +37,5 @@
     public static function getActiveTimeById($id){
       return (new Database('tb_tempo_ativo'))->select('id_tempo = "'.$id.'"')->fetchObject(self::class);
     }
-
-    // método responsável por carrega os dados do usuário
-    public static function loadActiveTimeUserViewValues($objParamUser){
-
-      // mapear os campos
-      $objUser = new User();
-      $objUser->id_usuario    = (int)$objParamUser->id_usuario;
-      $objUser->nm_nickname   = $objParamUser->nm_nickname;
-      $objUser->nm_usuario    = $objParamUser->nm_usuario;
-      $objUser->ds_email      = $objParamUser->ds_email;
-      $objUser->dt_nascimento = $objParamUser->dt_nascimento;
-      $objUser->img_usuario   = $objParamUser->img_usuario;
-      unset($objUser->ds_senha);
-
-      // retornar valor
-      return $objUser;
-    }
   }  
 ?>
