@@ -13,6 +13,7 @@
     public $id_atividade;
     public $vl_sentimento_ant;
     public $vl_sentimento_prox;
+    public $qtd_sentimento;
 
     // método responsável por inserir registros no banco
     public function insertNewDataCollect(){
@@ -37,6 +38,27 @@
         'vl_sentimento_ant'   => $this->vl_sentimento_ant,
         'vl_sentimento_prox'  => $this->vl_sentimento_prox
       ]);
+    }
+
+    // método responsável por obter um array de registros do banco de dados 
+    public static function getDataCollectByViewId($id){
+
+      // array vázio
+      $itens = [];
+
+      // recuperar query do banco de dados
+      $getView = (new Database('vw_quantidade_sentimento'))->select('id_usuario = '.$id);
+
+      // popular array com os valores vindos do banco de dados
+      while($item = $getView->fetchObject(self::class)){
+        $itens[] = [
+          "vl_sentimento_prox"  => $item->vl_sentimento_prox,
+          "qtd_sentimento"      => (int)$item->qtd_sentimento
+        ];
+      }
+
+      // retornar array
+      return $itens;
     }
 
     // método responsável por obter o registro atráves do id

@@ -23,6 +23,9 @@
                 throw new \Exception("Código '".$id."' não foi encontrada.", 404);
             }
 
+            // buscar quantidade de sentimento
+            $qtdDataCollect = EntityDataCollect::getDataCollectByViewId($objDataCollect->id_usuario);
+
             // recupeara objeto atividade
             $objActivity = EntityActivity::loadActivity($objDataCollect->id_atividade);
 
@@ -31,11 +34,12 @@
 
             // retornar valor para api
             return [
-                'id_coleta_dado'     => (int)$objDataCollect->id_coleta_dado,
-                'vl_sentimento_ant'  => $objDataCollect->vl_sentimento_ant,
-                'vl_sentimento_prox' => $objDataCollect->vl_sentimento_prox,
-                'usuario'            => $objUser,        
-                'atividade'          => $objActivity,
+                'id_coleta_dado'         => (int)$objDataCollect->id_coleta_dado,
+                'vl_sentimento_ant'      => $objDataCollect->vl_sentimento_ant,
+                'vl_sentimento_prox'     => $objDataCollect->vl_sentimento_prox,
+                'vl_contagem_sentimento' => $qtdDataCollect, 
+                'usuario'                => $objUser,        
+                'atividade'              => $objActivity,
             ];
         }
 
