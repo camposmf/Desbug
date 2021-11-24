@@ -53,7 +53,7 @@ Dessa forma, o projeto DESbug busca amenizar o impacto causado por distúrbios e
 
 Prototipação: https://bit.ly/3kzj7AZ
 <br>
-Documentação: https://docs.google.com/document/d/11ktYqJsB7USY5CsS9hBWcHLScfvothoy/edit#heading=h.xu9dpkktrk0r
+Documentação: https://bit.ly/3cFoNFm
 
 
 
